@@ -1,5 +1,5 @@
 'use client'
-import signUp from "@/firebase/auth/signup";
+import signIn from "@/firebase/auth/signIn";
 import { useRouter } from 'next/navigation';
 import { useState } from "react";
 
@@ -12,16 +12,16 @@ function Page() {
   const handleForm = async ( event: { preventDefault: () => void } ) => {
     event.preventDefault();
 
-    // Attempt to sign up with provided email and password
-    const { result, error } = await signUp( email, password );
+    // Attempt to sign in with provided email and password
+    const { result, error } = await signIn( email, password );
 
     if ( error ) {
-      // Display and log any sign-up errors
+      // Display and log any sign-in errors
       console.log( error );
       return;
     }
 
-    // Sign up successful
+    // Sign in successful
     console.log( result );
 
     // Redirect to the admin page
