@@ -98,3 +98,7 @@ This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next
 <https://nextjs.org/docs/app/building-your-application/routing/pages-and-layouts>
 
 To create a `webpage` in Next.js, create a directory in `app` folder, then create a `page.js` or `page.ts` file inside of your newly created directory that represents the webpage.
+
+## renovate.json
+
+Unless you use Renovate, or wish to use it, just delete this file. Its similar to Dependabot, which is also setup here.
