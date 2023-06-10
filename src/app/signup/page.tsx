@@ -29,12 +29,14 @@ function Page() {
   }
 
   return (
-    <div className="wrapper">
-      <div className="form-wrapper">
-        <h1 className="mt-60 mb-30">Sign up</h1>
-        <form onSubmit={handleForm} className="form">
-          <label htmlFor="email">
-            <p>Email</p>
+    <div className="flex justify-center items-center h-screen text-black">
+      <div className="w-96 bg-white rounded shadow p-6">
+        <h1 className="text-3xl font-bold mb-6">Registration</h1>
+        <form onSubmit={handleForm} className="space-y-4">
+          <div>
+            <label htmlFor="email" className="block mb-1 font-medium">
+              Email
+            </label>
             <input
               onChange={( e ) => setEmail( e.target.value )}
               required
@@ -42,10 +44,13 @@ function Page() {
               name="email"
               id="email"
               placeholder="example@mail.com"
+              className="w-full border border-gray-300 rounded px-3 py-2"
             />
-          </label>
-          <label htmlFor="password">
-            <p>Password</p>
+          </div>
+          <div>
+            <label htmlFor="password" className="block mb-1 font-medium">
+              Password
+            </label>
             <input
               onChange={( e ) => setPassword( e.target.value )}
               required
@@ -53,9 +58,15 @@ function Page() {
               name="password"
               id="password"
               placeholder="password"
+              className="w-full border border-gray-300 rounded px-3 py-2"
             />
-          </label>
-          <button type="submit">Sign up</button>
+          </div>
+          <button
+            type="submit"
+            className="w-full bg-blue-500 text-white font-semibold py-2 rounded"
+          >
+            Sign up
+          </button>
         </form>
       </div>
     </div>
