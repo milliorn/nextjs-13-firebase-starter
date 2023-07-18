@@ -1,15 +1,40 @@
-# Full Stack App with Next.js 13 and Firebase
+# Next.js 13 Firebase Starter
+
+This is a starter template for building Next.js 13 applications with Firebase. It provides a solid foundation for developing modern web applications with server-side rendering, authentication, and real-time data synchronization.
+
+## Features
+
+- Next.js 13: Build powerful and scalable server-side rendered React applications.
+- Firebase: Leverage the Firebase platform for authentication, real-time database, and cloud functions.
+- Tailwind CSS: Rapidly build custom user interfaces using the utility-first CSS framework.
+- Automatic Code Splitting: Optimize performance by splitting your JavaScript code into smaller, cacheable chunks.
+- Dynamic Routing: Create dynamic routes for handling different pages and content.
+- Hot Module Replacement: Enjoy a fast development experience with hot module replacement for instant code changes.
+- Environment Variables: Safely manage environment-specific configuration values using environment variables.
+- ESLint and Prettier: Maintain code quality and consistency with the help of ESLint and Prettier.
+
+## Prerequisites
+
+Before getting started, ensure you have the following prerequisites:
+
+- Node.js 14 or higher
+- npm or yarn package manager
 
 ## Getting Started
 
-First, run the development server:
-
+- To start a new project using this template click `Use this template` button.
+- Navigate into the project directory: `cd nextjs-13-firebase-starter`
+- Install the dependencies:
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
+  npm install
+  # or
+  yarn install
+```  
+- Run the development server:
+```bash
+  npm run dev
+  # or
+  yarn dev
 ```
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
@@ -89,16 +114,36 @@ You should now be setup to use Firebase.
 - In `src/firebase` directory, create a directory called `auth`.
 - Create a signin.js file in the same directory.
 
-## Next.js
+## Folder Structure
 
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+The folder structure of this project is organized as follows:
 
-## Create Pages in Next.JS
+- `pages`: Contains the Next.js pages for server-side rendering.
+- `components`: Holds the reusable React components.
+- `lib`: Includes utility functions and modules.
+- `public`: Stores static assets such as images, fonts, and stylesheets.
+- `styles`: Contains global styles and Tailwind CSS configuration.
+- `firebase`: Houses the Firebase configuration and Firebase-related functions.
 
-<https://nextjs.org/docs/app/building-your-application/routing/pages-and-layouts>
+Feel free to modify and expand the folder structure according to your project requirements.
 
-To create a `webpage` in Next.js, create a directory in `app` folder, then create a `page.js` or `page.ts` file inside of your newly created directory that represents the webpage.
+## Deployment
 
-## renovate.json
+To deploy your Next.js application with Firebase, follow the Firebase deployment instructions specific to your hosting option (Firebase Hosting, Cloud Functions, etc.). Make sure to set up the appropriate environment variables for your production environment.
 
-Unless you use Renovate, or wish to use it, just delete this file. Its similar to Dependabot, which is also setup here.
+## Contributing
+
+Contributions are welcome! If you encounter any issues or have suggestions for improvements, please feel free to open an issue or submit a pull request.
+
+## License
+
+This project is licensed under the MIT License. See the LICENSE file for more details.
+
+## Acknowledgements
+
+This project was created using the Next.js framework and Firebase platform.
+
+Resources
+- [Next.js Documentation](https://nextjs.org/docs)
+- [Firebase Documentation](https://firebase.google.com/docs)
+- [Tailwind CSS Documentation](https://tailwindcss.com/docs)
