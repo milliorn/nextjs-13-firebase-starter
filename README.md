@@ -137,7 +137,7 @@ Contributions are welcome! If you encounter any issues or have suggestions for i
 
 ## License
 
-This project is licensed under the MIT License. See the LICENSE file for more details.
+This project is licensed under the GNU Affero General Public License. See the LICENSE file for more details.
 
 ## Acknowledgements
 
