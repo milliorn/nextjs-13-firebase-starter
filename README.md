@@ -25,12 +25,15 @@ Before getting started, ensure you have the following prerequisites:
 - To start a new project using this template click `Use this template` button.
 - Navigate into the project directory: `cd nextjs-13-firebase-starter`
 - Install the dependencies:
+
 ```bash
   npm install
   # or
   yarn install
-```  
+```
+
 - Run the development server:
+
 ```bash
   npm run dev
   # or
@@ -88,21 +91,7 @@ NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID=your_messaging_sender_id
 NEXT_PUBLIC_FIREBASE_APP_ID=your_app_id
 ```
 
-- Replace the value of your keys with the values you find in `firebaseConfig` in `firebase.js`.
-
-Now, replace the `firebaseConfig` object with this...
-
-```js
-const firebaseConfig = {
-  apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
-  authDomain: process.env.NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN,
-  projectId: process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID,
-  storageBucket: process.env.NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET,
-  messagingSenderId: process.env.NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID,
-  appId: process.env.NEXT_PUBLIC_FIREBASE_APP_ID,
-};
-```
-
+- Create `env` file and paste these variables with your own information.
 - Click on `Continue on console` button
 - On your project homepage, choose a product to add to your app. First, click on `Authentication`.
 - Under `Get started with Firebase Auth by adding your first sign-in method` select `Email/Password`.
@@ -111,8 +100,7 @@ You should now be setup to use Firebase.
 
 ## Authentication
 
-- In `src/firebase` directory, create a directory called `auth`.
-- Create a signin.js file in the same directory.
+- In `src/firebase` directory, exists the directory `auth` containing the logic for `signin` and `signup`.
 
 ## Folder Structure
 
@@ -144,6 +132,7 @@ This project is licensed under the MIT License. See the LICENSE file for more de
 This project was created using the Next.js framework and Firebase platform.
 
 Resources
+
 - [Next.js Documentation](https://nextjs.org/docs)
 - [Firebase Documentation](https://firebase.google.com/docs)
 - [Tailwind CSS Documentation](https://tailwindcss.com/docs)
