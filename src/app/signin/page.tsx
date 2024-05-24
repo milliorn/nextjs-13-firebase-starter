@@ -2,6 +2,10 @@
 import signIn from "@/firebase/auth/signIn";
 import { useRouter } from 'next/navigation';
 import { useState } from "react";
+import {Grid, GridItem, Input, InputGroup, InputLeftElement, Text } from '@chakra-ui/react'
+import { Flex, Spacer, Box, Heading, ButtonGroup, Button, Stack } from '@chakra-ui/react'
+import { SearchIcon } from '@chakra-ui/icons';
+import { Link } from "@chakra-ui/next-js";
 
 function Page(): JSX.Element {
   const [ email, setEmail ] = useState( '' );
@@ -31,49 +35,36 @@ function Page(): JSX.Element {
   }
 
   return (
-    <div className="flex flex-col items-center justify-center h-screen">
-      <div className="w-full max-w-xs">
-        <form onSubmit={handleForm} className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
-          <h1 className="text-3xl font-bold mb-6 text-black">Sign In</h1>
-          <div className="mb-4">
-            <label htmlFor="email" className="block text-gray-700 text-sm font-bold mb-2">
-              Email
-            </label>
-            <input
-              onChange={( e ) => setEmail( e.target.value )}
-              required
-              type="email"
-              name="email"
-              id="email"
-              placeholder="example@mail.com"
-              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-            />
-          </div>
-          <div className="mb-6">
-            <label htmlFor="password" className="block text-gray-700 text-sm font-bold mb-2">
-              Password
-            </label>
-            <input
-              onChange={( e ) => setPassword( e.target.value )}
-              required
-              type="password"
-              name="password"
-              id="password"
-              placeholder="password"
-              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-            />
-          </div>
-          <div className="flex items-center justify-between">
-            <button
-              type="submit"
-              className="w-full bg-blue-500 text-white font-semibold py-2 rounded"
-            >
-              Sign In
-            </button>
-          </div>
-        </form>
-      </div>
-    </div>
+    <Flex height="100vh" alignItems="center" justifyContent="center">
+    <Box p={8} maxWidth="500px" borderWidth={1} borderRadius={8} boxShadow="lg">
+      <Heading mb={4}>Ingresar en MenuAt</Heading>
+      <InputGroup>
+        <InputLeftElement
+          pointerEvents="none"
+          children={<SearchIcon color="gray.300" />}
+        />
+        <Input 
+            onChange={( e ) => setEmail( e.target.value )}
+            type="text" placeholder="Corre electronico" />
+      </InputGroup>
+      <InputGroup mt={4}>
+        <InputLeftElement
+          pointerEvents="none"
+          children={<SearchIcon color="gray.300" />}
+        />
+        <Input 
+            onChange={( e ) => setPassword( e.target.value )}
+            type="password" placeholder="Contraseña" />
+      </InputGroup>
+      <ButtonGroup mt={8} spacing={4}>
+        <Button onClick={handleForm} colorScheme='orange'>Ingresar</Button>
+        <Button colorScheme='orange' variant='outline'>Te olvidaste la contraseña?</Button>
+      </ButtonGroup>
+      <Text mt={4} textAlign="center">
+        Nuevo en givemethemenu? <Link href="/" color="blue.500">Crear cuenta</Link>
+      </Text>
+    </Box>
+  </Flex>
   );
 }
 
