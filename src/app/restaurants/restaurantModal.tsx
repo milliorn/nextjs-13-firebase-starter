@@ -14,24 +14,30 @@ import {
   Stack,
 } from '@chakra-ui/react';
 import { getDatabase, ref, push, set } from 'firebase/database';
+import { useAuthContext } from '@/context/AuthContext';
+import { getFirestore } from 'firebase/firestore';
+import firebase_app from '@/firebase/config';
+import { collection, addDoc } from 'firebase/firestore';
 
-const RestaurantModal: React.FC = ({isOpen, close}) => {
-
+const RestaurantModal: React.FC = ({isOpen, close}:any) => {
+  const context = useAuthContext();
   const handleSubmit = async (values :any ) => {
     console.log('Form values:', values);
-    // console.log('User:', user);
-    // try {
-    //   const newRestaurantRef = push(ref(db, 'restaurants'));
 
-    //   await set(newRestaurantRef, {
-    //     ...values,
-    //     ownerId: user?.uid,
-    //   });
+    console.log('User:', (context as any).user);
+    const db = getFirestore(firebase_app);
+    const user = (context as any).user;
 
-    //   console.log("Restaurant added with ID: ", newRestaurantRef.key);
-    // } catch (error) {
-    //   console.error("Error adding restaurant: ", error);
-    // }
+    addDoc(collection(db, 'restaurants'), {
+      ...values,
+      ownerId: user?.uid,
+    })
+    .then((docRef) => {
+      console.log('Document written with ID: ', docRef.id);
+    })
+    .catch((error) => {
+      console.error('Error adding document: ', error);
+    });
   };
 
   const  handleOnClose = () => {

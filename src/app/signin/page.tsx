@@ -31,7 +31,7 @@ function Page(): JSX.Element {
     // Redirect to the admin page
     // Typically you would want to redirect them to a protected page an add a check to see if they are admin or 
     // create a new page for admin
-    router.push( "/admin" );
+    router.push( "/restaurants" );
   }
 
   return (
