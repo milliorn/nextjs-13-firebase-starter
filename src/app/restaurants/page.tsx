@@ -10,19 +10,19 @@ import { Card, CardHeader, CardBody, CardFooter } from '@chakra-ui/react'
 import { StarIcon } from '@chakra-ui/icons';
 import BreadcrumComponent from "../components/breadcrum";
 import RestaurantModal from "./restaurantModal";
-import { getDatabase } from "firebase/database";
 import firebase_app from "../../firebase/config";
+import { getDatabase, ref, set } from "firebase/database";
+import { collection, getFirestore, onSnapshot, query, where } from "firebase/firestore";
 import { useAuthContext } from "../../context/AuthContext";
-import { ref } from "firebase/database";
 
 export default function Page() {
-  const ref = useRef(null);
+  const refScreen = useRef(null);
   const [isOpen, setIsOpen] = useState(false);
   const [restaurants, setRestaurants] = useState([]);
-const user = useContext(useAuthContext);
+  const context = useAuthContext();
   useEffect(() => {
-    if (ref.current) {
-      ref.current.style.maxHeight = `${window.innerHeight}px`;
+    if (refScreen.current) {
+      refScreen.current.style.maxHeight = `${window.innerHeight}px`;
     }
   }, []);
 
@@ -31,26 +31,24 @@ const user = useContext(useAuthContext);
   }
 
   useEffect(() => {
-    const db = getDatabase(firebase_app);
+    const db = getFirestore(firebase_app);
+    const restaurantsRef = collection(db, 'restaurants');
+    const user = (context as any).user;
+    const q = query(restaurantsRef, where("ownerId", "==", user?.uid));
 
-    const userRestaurantsRef = db.ref(`users/${user?.uid}/restaurants`);
-    userRestaurantsRef.once('value', (snapshot) => {
-      const data = snapshot.val();
+    const unsub = onSnapshot(q, (snapshot) => {
+      const data :any = snapshot.docs.map(doc => ({...doc.data(), id: doc.id}));
       console.log(data);
       setRestaurants(data);
     });
+
+    return () => {
+      unsub();
+    }
   }, []);
 
-  const restaurant1 = {
-    name: 'Restaurante 1',
-    description: 'Descripcion del restaurante 1',
-    address: 'Direccion del restaurante 1',
-    phone: '123456789',
-    instagram: 'instagram1',
-  }
-
   return (
-    <div ref={ref} >
+    <div ref={refScreen} >
       <GridItem area={'nav'}  rowSpan={7} colSpan={5}>
         <BreadcrumComponent/>
         <Button onClick={changeIsOpenModal} variant='solid' marginLeft={6} colorScheme='orange' width={['50%','50%','20%','20%']}>
