@@ -37,8 +37,11 @@ import {
   OrderedList,
   UnorderedList,
 } from '@chakra-ui/react'
+import { useRouter } from "next/navigation";
 
 export default function Page() {
+  const router = useRouter();
+  const { id } = router.query;
   const ref = useRef(null);
 
   useEffect(() => {

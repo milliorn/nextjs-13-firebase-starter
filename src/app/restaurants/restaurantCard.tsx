@@ -1,6 +1,18 @@
 import React from 'react';
 import { Box, Card, CardBody, Stack, Heading, Text, CardFooter, ButtonGroup, Button } from '@chakra-ui/react';
+import { useRouter } from "next/navigation";
 const RestaurantCard = ({restaurant}) => {
+  const router = useRouter();
+
+  const handleEdit = () => {
+    console.log('Edit');
+  }
+
+  const handleMenu = () => {
+    console.log('Menu');
+    router.push( "/menu" );
+  }
+
   return (
     <>
       <Box bg='' >
@@ -20,10 +32,14 @@ const RestaurantCard = ({restaurant}) => {
             </CardBody>
             <CardFooter>
               <ButtonGroup spacing='2'>
-                <Button variant='ghost' colorScheme='orange'>
+                <Button 
+                  onClick={handleEdit}
+                  variant='ghost' colorScheme='orange'>
                   Editar
                 </Button>
-                <Button variant='ghost' colorScheme='orange'>
+                <Button 
+                  onClick={handleMenu}
+                  variant='ghost' colorScheme='orange'>
                   Menu
                 </Button>
               </ButtonGroup>
