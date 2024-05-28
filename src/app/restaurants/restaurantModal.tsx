@@ -34,6 +34,7 @@ const RestaurantModal: React.FC = ({isOpen, close}:any) => {
     })
     .then((docRef) => {
       console.log('Document written with ID: ', docRef.id);
+      close();
     })
     .catch((error) => {
       console.error('Error adding document: ', error);

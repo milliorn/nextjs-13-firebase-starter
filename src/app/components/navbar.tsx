@@ -2,12 +2,17 @@
 import { Box, Button, ButtonGroup, Flex, Heading, Spacer } from '@chakra-ui/react';
 import React, { useEffect } from 'react';
 import 'firebase/auth'
+import { useAuthContext } from '@/context/AuthContext';
 
 const Navbar = () => {
+  const context = useAuthContext();
+  const user = (context as any).user;
+  console.log("user",user)
+
 
     const logout = async () => {
       console.log("logout")
-      //await auth.signOut()
+      await user.signOut()
     }
 
     return (
@@ -19,18 +24,21 @@ const Navbar = () => {
           </Box>
           <Spacer />
           <ButtonGroup gap='1'>
-          { (!true) ?
+          { (!user) ?
+          <>
             <a href={'/singup'}>
               <Button  colorScheme='orange' variant='solid'>
-              Registrarse
-            </Button> 
-          </a> : null }
-          <a href={'/login'}>
-            { (false) ? 
-              <Button  onClick={logout} colorScheme='orange' variant='outline'>Salir</Button> : 
+                Registrarse
+              </Button> 
+            </a>
+            <a href={'/login'}>
               <Button  colorScheme='orange' variant='outline'>Ingresar</Button>
-            }
-          </a>
+             </a>
+            </>
+          : 
+          <Button  onClick={logout} colorScheme='orange' variant='outline'>Salir</Button>
+          }
+          
           </ButtonGroup>
         </Flex>
         </div>
