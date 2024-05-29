@@ -1,7 +1,7 @@
 import React from 'react';
 import { Box, Card, CardBody, Stack, Heading, Text, CardFooter, ButtonGroup, Button } from '@chakra-ui/react';
 import { useRouter } from "next/navigation";
-const RestaurantCard = ({restaurant}) => {
+const MenuCard = ({menu}:any) => {
   const router = useRouter();
 
   const handleEdit = () => {
@@ -9,8 +9,8 @@ const RestaurantCard = ({restaurant}) => {
   }
 
   const handleMenu = () => {
-    console.log(restaurant);
-    router.push( `/restaurant/${restaurant.id}/menus` );
+    console.log('Menu');
+    router.push( "/menu" );
   }
 
   return (
@@ -24,9 +24,9 @@ const RestaurantCard = ({restaurant}) => {
                 borderRadius='lg'
               /> */}
               <Stack spacing='1'>
-                <Heading size='sm'>{restaurant.name}</Heading>
+                <Heading size='sm'>{menu.name}</Heading>
                 <Text size='xs'>
-                  {restaurant.description}
+                  {menu.description}
                 </Text> 
               </Stack>
             </CardBody>
@@ -40,7 +40,7 @@ const RestaurantCard = ({restaurant}) => {
                 <Button 
                   onClick={handleMenu}
                   variant='ghost' colorScheme='orange'>
-                  Menus
+                  asd
                 </Button>
               </ButtonGroup>
             </CardFooter>
@@ -50,4 +50,4 @@ const RestaurantCard = ({restaurant}) => {
   );
 };
 
-export default RestaurantCard;
+export default MenuCard;
