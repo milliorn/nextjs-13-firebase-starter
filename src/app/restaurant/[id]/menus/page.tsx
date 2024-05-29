@@ -18,7 +18,6 @@ import Head from "next/head";
 import { useParams, useRouter } from "next/navigation";
 
 export default function Page() {
-  const router = useRouter();
   const id : any = useParams().id;
   const refScreen = useRef(null);
   const [isOpen, setIsOpen] = useState(false);
@@ -37,7 +36,6 @@ export default function Page() {
   useEffect(() => {
     const db = getFirestore(firebase_app);
     const menusRef = collection(db, 'menus');
-    console.log(id)
     const q = query(menusRef, where("restaurantId", "==", id));
 
     const unsub = onSnapshot(q, (snapshot) => {

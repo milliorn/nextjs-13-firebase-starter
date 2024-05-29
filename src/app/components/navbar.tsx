@@ -31,7 +31,7 @@ const Navbar = () => {
                 Registrarse
               </Button> 
             </a>
-            <a href={'/login'}>
+            <a href={'/signin'}>
               <Button  colorScheme='orange' variant='outline'>Ingresar</Button>
              </a>
             </>

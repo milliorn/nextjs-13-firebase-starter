@@ -1,54 +1,47 @@
 // app/page.tsx
 'use client'
-import { useRef, useEffect } from "react";
-import Navbar from '../components/navbar';
-import BreadcrumComponent from '../components/breadcrum';
-import FormMenu from './FormMenu';
-import FormSection from '../sections/formSection';
-import SectionList from '../sections/sectionList';
-import ProductsList from '../products/productList';
-import ProductoModal from '../products/productModal';
+import { useRef, useEffect, useState } from "react";
+import BreadcrumComponent from '../../../../components/breadcrum';
+import FormMenu from '../formMenu';
+import FormSection from '../../../../sections/formSection';
+import SectionList from '../../../../sections/sectionList';
+import ProductsList from '../../../../products/productList';
+import ProductoModal from '../../../../products/productModal';
 import {Center, Grid, GridItem, Input, InputGroup, InputLeftElement, Text } from '@chakra-ui/react'
-import { Flex, Spacer, Box, Divider, Image, Heading, ButtonGroup, Button, Stack, SimpleGrid, FormControl, FormLabel, FormHelperText, Textarea } from '@chakra-ui/react'
-import { ChevronRightIcon } from '@chakra-ui/icons';
- import { Field, Form, Formik } from 'formik';
- import {
-  Modal,
-  ModalOverlay,
-  ModalContent,
-  ModalHeader,
-  ModalFooter,
-  ModalBody,
-  ModalCloseButton,
-} from '@chakra-ui/react'
-import {
-  Breadcrumb,
-  BreadcrumbItem,
-  BreadcrumbLink,
-  BreadcrumbSeparator,
-} from '@chakra-ui/react'
-import { Card, CardHeader, CardBody, CardFooter } from '@chakra-ui/react'
-import { StarIcon } from '@chakra-ui/icons';
-import Head from "next/head";
-import {
-  List,
-  ListItem,
-  ListIcon,
-  OrderedList,
-  UnorderedList,
-} from '@chakra-ui/react'
-import { useRouter } from "next/navigation";
+import { Flex, Spacer, Box, Divider, Image, Heading, ButtonGroup, Button, Stack, SimpleGrid, FormControl, FormLabel, FormHelperText, Textarea } from '@chakra-ui/react' 
+import { Card, CardHeader, CardBody } from '@chakra-ui/react'
+import { useParams, useRouter } from "next/navigation";
+import { collection, getFirestore, onSnapshot, query, where } from "firebase/firestore";
+import firebase_app from "@/firebase/config";
 
 export default function Page() {
-  const router = useRouter();
-  const { id } = router.query;
+  const menuId : any = useParams().menuId;
   const ref = useRef(null);
+  const [menu, setMenu] = useState([]);
 
   useEffect(() => {
     if (ref.current) {
       ref.current.style.maxHeight = `${window.innerHeight}px`;
     }
   }, []);
+
+  useEffect(() => {
+    const db = getFirestore(firebase_app);
+    const menusRef = collection(db, 'menus');
+    const q = query(menusRef, where("menuId", "==", menuId));
+
+    const unsub = onSnapshot(q, (snapshot) => {
+      const data :any = snapshot.docs.map(doc => ({...doc.data(), id: doc.id}));
+      console.log(data);
+      setMenu(data || []);
+    });
+
+    return () => {
+      unsub();
+    }
+  }, []);
+
+  
   return (
     <div ref={ref} >
       <GridItem area={'nav'}  rowSpan={8} colSpan={5}>

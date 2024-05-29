@@ -1,16 +1,16 @@
 import React from 'react';
 import { Box, Card, CardBody, Stack, Heading, Text, CardFooter, ButtonGroup, Button } from '@chakra-ui/react';
-import { useRouter } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 const MenuCard = ({menu}:any) => {
   const router = useRouter();
+  const id : any = useParams().id;
 
   const handleEdit = () => {
-    console.log('Edit');
+    console.log(menu);
   }
 
   const handleMenu = () => {
-    console.log('Menu');
-    router.push( "/menu" );
+    router.push(`/restaurant/${id}/menu/${menu.id}`);
   }
 
   return (

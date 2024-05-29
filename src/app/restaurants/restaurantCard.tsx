@@ -9,7 +9,6 @@ const RestaurantCard = ({restaurant}) => {
   }
 
   const handleMenu = () => {
-    console.log(restaurant);
     router.push( `/restaurant/${restaurant.id}/menus` );
   }
 
