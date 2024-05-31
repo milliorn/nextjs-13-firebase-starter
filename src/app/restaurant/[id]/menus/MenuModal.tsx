@@ -58,7 +58,7 @@ const MenuModal: React.FC = ({isOpen, close, restaurantId}:any) => {
               }}
               onSubmit={handleSubmit}
             >
-              <Form>
+          <Form>
           <ModalHeader>Nuevo Menu</ModalHeader>
           <ModalCloseButton onClick={() => handleOnClose} />
           <ModalBody>

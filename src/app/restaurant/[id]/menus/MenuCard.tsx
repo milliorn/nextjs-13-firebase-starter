@@ -5,10 +5,6 @@ const MenuCard = ({menu}:any) => {
   const router = useRouter();
   const id : any = useParams().id;
 
-  const handleEdit = () => {
-    console.log(menu);
-  }
-
   const handleMenu = () => {
     router.push(`/restaurant/${id}/menu/${menu.id}`);
   }
@@ -33,14 +29,9 @@ const MenuCard = ({menu}:any) => {
             <CardFooter>
               <ButtonGroup spacing='2'>
                 <Button 
-                  onClick={handleEdit}
-                  variant='ghost' colorScheme='orange'>
-                  Editar
-                </Button>
-                <Button 
                   onClick={handleMenu}
                   variant='ghost' colorScheme='orange'>
-                  asd
+                  Editar
                 </Button>
               </ButtonGroup>
             </CardFooter>
