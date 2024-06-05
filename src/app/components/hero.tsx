@@ -24,7 +24,7 @@ const Hero = () => {
               Crear menu
             </Button>
           </a>
-          <a href={'/menus'}>
+          <a href={'/restaurants'}>
             <Button size={'lg'} colorScheme='orange' variant='outline'>
               Editar mi menu
             </Button>

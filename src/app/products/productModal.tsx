@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Formik, Form, Field } from 'formik';
 import {
   Modal,
@@ -13,63 +13,79 @@ import {
   Input,
   Stack,
 } from '@chakra-ui/react';
+import { addDoc, collection, getFirestore } from 'firebase/firestore';
+import firebase_app from '@/firebase/config';
 
-const ProductModal: React.FC = () => {
+const ProductModal: React.FC = ({ menuId, refreshList, isOpen, close } : any) => {
+
+  const[product, setProduct] = useState({name: '', description: ''})
+  const handleSubmit = async (values: any) => {
+    console.log('Form values:', values);
+    const db = getFirestore(firebase_app);
+    addDoc(collection(db, 'products'), {
+      ...values,
+      menuId: menuId,
+    })
+    .then((docRef) => {
+      console.log('Document written with ID: ', docRef.id);
+      refreshList();
+    })
+    .catch((error) => {
+      console.error('Error adding document: ', error);
+    });
+  } 
+  const  handleOnClose = () => {
+    close();
+  }
   return (
     <>
-      <Modal isOpen={false} onClose={() => console.log("aasd")} >
+      <Modal isOpen={isOpen} onClose={handleOnClose} >
         <ModalOverlay />
         <ModalContent>
-          <ModalHeader>Nuevo Producto</ModalHeader>
-          <ModalCloseButton />
-          <ModalBody>
-          <Formik
-              initialValues={{ seccion: "" }}
-              onSubmit={(values) => {
-                console.log(values.seccion);
-                // Add your logic to save the section here
+        <Formik
+              initialValues={{ 
+                name: '',
+                price: '',
+                description: '',
               }}
+              onSubmit={handleSubmit}
             >
-              <Form>
-              <Stack  >
-                <Field name="name">
-                  {({ field }:any) => (
-                    <FormControl>
-                      <Input  {...field} type="text" placeholder="Nombre" />
-                    </FormControl>
-                  )}
-                </Field>
-                <Field name="decripcion">
-                  {({ field }:any) => (
-                    <FormControl>
-                      <Input  {...field} type="text" placeholder="Descripcion" />
-                    </FormControl>
-                  )}
-                </Field>
-                <Field name="price">
-                  {({ field }:any) => (
-                    <FormControl>
-                      <Input  {...field} type="number" placeholder="Precio" />
-                    </FormControl>
-                  )}
-                </Field>
-                <Field name="price">
-                  {({ field }:any) => (
-                    <FormControl>
-                      <Input  {...field} type="number" placeholder="Imagen" />
-                    </FormControl>
-                  )}
-                </Field>
+          <Form>
+          <ModalHeader>Nuevo Menu</ModalHeader>
+          <ModalCloseButton onClick={() => handleOnClose} />
+          <ModalBody>
+                <Stack spacing={4}>
+                  <Field name="name">
+                    {({ field }:any) => (
+                      <FormControl>
+                        <Input {...field} type="text" placeholder="Nombre" />
+                      </FormControl>
+                    )}
+                  </Field>
+                  <Field name="description">
+                    {({ field }:any) => (
+                      <FormControl>
+                        <Input {...field} type="text" placeholder="Descripcion" />
+                      </FormControl>
+                    )}
+                  </Field>
+                  <Field name="price">
+                    {({ field }:any) => (
+                      <FormControl>
+                        <Input {...field} type="text" placeholder="Precio" />
+                      </FormControl>
+                    )}
+                  </Field>
                 </Stack>
-              </Form>
-            </Formik>
           </ModalBody>
           <ModalFooter>
-            <Button colorScheme='orange' mr={3} >
+            <Button  colorScheme='orange' mr={3} type="submit">
               Guardar
             </Button>
             <Button variant='ghost'>Cancelar</Button>
           </ModalFooter>
+          </Form>
+            </Formik>
         </ModalContent>
       </Modal>
     </>

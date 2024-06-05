@@ -6,7 +6,7 @@ import FormMenu from '../formMenu';
 import FormSection from '../../../../sections/formSection';
 import SectionList from '../../../../sections/sectionList';
 import ProductsList from '../../../../products/productList';
-import ProductoModal from '../../../../products/productModal';
+import ProductModal from '../../../../products/ProductModal';
 import {Center, Grid, GridItem, Input, InputGroup, InputLeftElement, Text } from '@chakra-ui/react'
 import { Flex, Spacer, Box, Divider, Image, Heading, ButtonGroup, Button, Stack, SimpleGrid, FormControl, FormLabel, FormHelperText, Textarea } from '@chakra-ui/react' 
 import { Card, CardHeader, CardBody } from '@chakra-ui/react'
@@ -18,6 +18,8 @@ export default function Page() {
   const menuId : any = useParams().menuId;
   const ref = useRef(null);
   const [menu, setMenu] :any = useState(null);
+  const [sections, setSections] : any = useState([]);
+  const [isOpen, setIsOpen] = useState(false);
 
   useEffect(() => {
     if (ref.current) {
@@ -39,10 +41,31 @@ export default function Page() {
     }
   }
 
+  const getSections = () => {
+    const db = getFirestore(firebase_app);
+    const sectionQuery = query(collection(db, 'sections'), where('menuId', '==', menuId));
+    onSnapshot(sectionQuery, (querySnapshot) => {
+      const sections = querySnapshot.docs.map((doc) => ({
+        id: doc.id,
+        ...doc.data(),
+      }));
+      setSections(sections);
+    });
+  }
+
+  const handleRefreshSections = () => {
+    getSections()
+  }
+
   useEffect(() => {
     getMenu(menuId);
+    getSections();
   }, []);
 
+  const changeIsOpenModal = () => {
+    console.log('new product')
+    setIsOpen(!isOpen);
+  }
   
   return (
     <div ref={ref} >
@@ -77,17 +100,19 @@ export default function Page() {
                   </CardBody>
                 </GridItem>
                 <GridItem colSpan={4} bg='yellow:200' >
-                  <FormSection/>
-                  <SectionList/>
+                  <FormSection menuId={menuId} refreshList={handleRefreshSections}/>
+                  <SectionList sections={sections}/>
                 </GridItem>
                 <GridItem colSpan={4} bg='tomato' >
                   <CardBody>
                     <Heading as='h2' size='md'>Productos</Heading>
                   </CardBody>
-                  <Button marginLeft={5} color="orange" variant="solid" >
+                  <Button 
+                    onClick={changeIsOpenModal}
+                    marginLeft={5} color="orange" variant="solid" >
                     Nuevo Productos
                   </Button>
-                  <ProductsList/>
+                  {/* <ProductsList /> */}
                 </GridItem>
               </Grid>
             </Card>
@@ -98,7 +123,7 @@ export default function Page() {
           </Center>
         )}
       </GridItem>  
-    <ProductoModal/>
+    <ProductModal isOpen={isOpen} close={changeIsOpenModal}   menuId={menuId}/>
 </div>
   )
 }
