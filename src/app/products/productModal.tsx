@@ -51,7 +51,7 @@ const ProductModal: React.FC = ({ menuId, refreshList, isOpen, close } : any) =>
               onSubmit={handleSubmit}
             >
           <Form>
-          <ModalHeader>Nuevo Menu</ModalHeader>
+          <ModalHeader>Nuevo Producto</ModalHeader>
           <ModalCloseButton onClick={() => handleOnClose} />
           <ModalBody>
                 <Stack spacing={4}>
@@ -82,7 +82,7 @@ const ProductModal: React.FC = ({ menuId, refreshList, isOpen, close } : any) =>
             <Button  colorScheme='orange' mr={3} type="submit">
               Guardar
             </Button>
-            <Button variant='ghost'>Cancelar</Button>
+            <Button onClick={() => handleOnClose} variant='ghost'>Cancelar</Button>
           </ModalFooter>
           </Form>
             </Formik>

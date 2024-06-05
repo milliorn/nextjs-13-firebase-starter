@@ -1,15 +1,16 @@
 import React from 'react';
 import { Flex, UnorderedList, ListItem } from '@chakra-ui/react';
 
-const ProductList: React.FC = () => {
+const ProductList = ({products}:any) => {
   return (
     <>
       <Flex justifyContent={'center'} alignItems={'center'}>
         <UnorderedList>
-          <ListItem>Lorem ipsum dolor sit amet</ListItem>
-          <ListItem>Consectetur adipiscing elit</ListItem>
-          <ListItem>Integer molestie lorem at massa</ListItem>
-          <ListItem>Facilisis in pretium nisl aliquet</ListItem>
+          {products.map((product : any) => (
+            <ListItem key={product.id}>
+              {product.name}
+            </ListItem>
+          ))}
         </UnorderedList>  
       </Flex>    
     </>

@@ -19,6 +19,7 @@ export default function Page() {
   const ref = useRef(null);
   const [menu, setMenu] :any = useState(null);
   const [sections, setSections] : any = useState([]);
+  const [products, setProducts] : any = useState([]);
   const [isOpen, setIsOpen] = useState(false);
 
   useEffect(() => {
@@ -53,13 +54,30 @@ export default function Page() {
     });
   }
 
+  const getProducts = () => {
+    const db = getFirestore(firebase_app);
+    const productQuery = query(collection(db, 'products'), where('menuId', '==', menuId));
+    onSnapshot(productQuery, (querySnapshot) => {
+      const products = querySnapshot.docs.map((doc) => ({
+        id: doc.id,
+        ...doc.data(),
+      }));
+      setProducts(products);
+    });
+  }
+
   const handleRefreshSections = () => {
     getSections()
+  }
+
+  const handleRefreshProducts = () => {
+    getProducts()
   }
 
   useEffect(() => {
     getMenu(menuId);
     getSections();
+    getProducts();
   }, []);
 
   const changeIsOpenModal = () => {
@@ -112,7 +130,7 @@ export default function Page() {
                     marginLeft={5} color="orange" variant="solid" >
                     Nuevo Productos
                   </Button>
-                  {/* <ProductsList /> */}
+                  <ProductsList products={products}/>
                 </GridItem>
               </Grid>
             </Card>
@@ -123,7 +141,7 @@ export default function Page() {
           </Center>
         )}
       </GridItem>  
-    <ProductModal isOpen={isOpen} close={changeIsOpenModal}   menuId={menuId}/>
+    <ProductModal isOpen={isOpen} close={changeIsOpenModal}  refreshList={handleRefreshProducts}  menuId={menuId}/>
 </div>
   )
 }
