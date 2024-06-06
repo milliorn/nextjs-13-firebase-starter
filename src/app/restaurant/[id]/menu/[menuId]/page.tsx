@@ -6,7 +6,7 @@ import FormMenu from '../formMenu';
 import FormSection from '../../../../sections/formSection';
 import SectionList from '../../../../sections/sectionList';
 import ProductsList from '../../../../products/productList';
-import ProductModal from '../../../../products/ProductModal';
+import ProductModal from '../../../../products/productModal';
 import {Center, Grid, GridItem, Input, InputGroup, InputLeftElement, Text } from '@chakra-ui/react'
 import { Flex, Spacer, Box, Divider, Image, Heading, ButtonGroup, Button, Stack, SimpleGrid, FormControl, FormLabel, FormHelperText, Textarea } from '@chakra-ui/react' 
 import { Card, CardHeader, CardBody } from '@chakra-ui/react'

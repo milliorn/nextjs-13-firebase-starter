@@ -28,6 +28,7 @@ const ProductModal: React.FC = ({ menuId, refreshList, isOpen, close } : any) =>
     })
     .then((docRef) => {
       console.log('Document written with ID: ', docRef.id);
+      close()
       refreshList();
     })
     .catch((error) => {
@@ -82,7 +83,7 @@ const ProductModal: React.FC = ({ menuId, refreshList, isOpen, close } : any) =>
             <Button  colorScheme='orange' mr={3} type="submit">
               Guardar
             </Button>
-            <Button onClick={() => handleOnClose} variant='ghost'>Cancelar</Button>
+            <Button onClick={handleOnClose} variant='ghost'>Cancelar</Button>
           </ModalFooter>
           </Form>
             </Formik>
