@@ -1,18 +1,50 @@
 'use client'
 import { useParams } from "next/navigation";
-import { useEffect, useRef } from "react";
+import firebase from 'firebase/app';
+import { useEffect, useRef, useState } from "react";
 import {Box, Card, Flex, GridItem, Heading, Input, InputGroup, InputLeftElement, Spacer, Stack, Text } from '@chakra-ui/react'
 import { SearchIcon } from "@chakra-ui/icons";
+import { collection, getDocs, getFirestore, query, where } from "firebase/firestore";
+import firebase_app from "@/firebase/config";
 
-export default function HelloWorld() {
+
+const replaceSpaces = (string: string) => string.replace(/%20/g, ' ');
+export default function Menu() {
   const restaurantName : any = useParams().restaurantName;
   const refScreen = useRef(null);
+  const [menu, setMenu] = useState(null)
 
   useEffect(() => {
     if (refScreen.current) {
       refScreen.current.style.maxHeight = `${window.innerHeight}px`;
     }
   }, []);
+  
+  useEffect(() => {
+    const fetchRestaurant = async () => {
+      try {
+        const db = getFirestore(firebase_app);
+        const queryRestaurantName = replaceSpaces(restaurantName);
+
+        console.log(queryRestaurantName);
+        const q = query(collection(db, "restaurants"), where("name", "==", queryRestaurantName));
+        const querySnapshot = await getDocs(q);
+
+        if (!querySnapshot.empty) {
+          // Assuming there's only one restaurant with the given name
+          const restaurantData = querySnapshot.docs[0].data();
+          console.log("Restaurant data:", restaurantData);
+          setMenu(restaurantData.menus[0])
+        } else {
+          console.log("Restaurant not found");
+        }
+      } catch (error) {
+        console.error("Error fetching restaurant:", error);
+      }
+    };
+
+    fetchRestaurant();
+  }, []); 
 
   return(
     <div ref={refScreen} >
