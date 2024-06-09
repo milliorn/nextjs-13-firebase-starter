@@ -6,6 +6,8 @@ import {Box, Card, Flex, GridItem, Heading, Input, InputGroup, InputLeftElement,
 import { SearchIcon } from "@chakra-ui/icons";
 import { collection, getDocs, getFirestore, query, where } from "firebase/firestore";
 import firebase_app from "@/firebase/config";
+import { set } from "firebase/database";
+import Section from "../components/section";
 
 
 const replaceSpaces = (string: string) => string.replace(/%20/g, ' ');
@@ -13,6 +15,8 @@ export default function Menu() {
   const restaurantName : any = useParams().restaurantName;
   const refScreen = useRef(null);
   const [menu, setMenu] = useState(null)
+  const [showErrorNotFound, setShowErrorNotFound] = useState(false);
+  const  [loading, setLoading] = useState(true);
 
   useEffect(() => {
     if (refScreen.current) {
@@ -35,51 +39,65 @@ export default function Menu() {
           const restaurantData = querySnapshot.docs[0].data();
           console.log("Restaurant data:", restaurantData);
           setMenu(restaurantData.menus[0])
+          setLoading(false);
         } else {
           console.log("Restaurant not found");
+          setShowErrorNotFound(true);
+          setLoading(false);
         }
       } catch (error) {
         console.error("Error fetching restaurant:", error);
+        setShowErrorNotFound(true);
+        setLoading(false);
       }
     };
 
     fetchRestaurant();
   }, []); 
 
-  return(
-    <div ref={refScreen} >
-      <GridItem area={'nav'}  rowSpan={7} colSpan={5}>
+  const sections = () => {
+    if (menu != null && menu.sections != null) {
+      return menu.sections.map((section: any) => {
+        return (
+          <Section section={section} key={section.id}/>
+        )
+      })
+    }
+  }
+
+  return (
+    <div ref={refScreen}>
+      <GridItem area={'nav'} rowSpan={7} colSpan={5}>
         <Card margin={5} height={'100%'}>
-          <Flex minWidth='max-content' justifyContent='center' gap='2'>
-            <Heading size={'xl'}>{restaurantName}</Heading>
-          </Flex>
-          <Stack spacing='4'>
-            <InputGroup>
-              <InputLeftElement pointerEvents='none' children={<SearchIcon color='gray.300' />} />
-              <Input type='text' placeholder='Buscar' />
-            </InputGroup>
-          </Stack>
-          <Flex direction={'column'}>
-            <Heading size={'md'}>Seccions 1</Heading>
-            <Flex>
-              <Box p='4' bg='red.400'>
-                Producto 1
-              </Box>
-              <Spacer />
-              <Box p='4' bg='green.400'>
-                $ 20.00
-              </Box>
-            </Flex>
-            <Flex>
-              <Box p='4' bg='red.400'>
-                Producto 1
-              </Box>
-              <Spacer />
-              <Box p='4' bg='green.400'>
-                $ 20.00
-              </Box>
-            </Flex>
-          </Flex>
+          {loading ? <Text textAlign="center">Cargando...</Text> : 
+          <>
+          {showErrorNotFound || menu == null ? (
+            <Text textAlign="center">Restaurante no encontrado</Text>
+          ) : (
+            <>
+              <Flex minWidth="max-content" justifyContent="center" gap="2">
+                <Heading size={'xl'}>{restaurantName}</Heading>
+              </Flex>
+              {/*}
+              <Stack spacing="4">
+                <InputGroup>
+                  <InputLeftElement
+                    pointerEvents="none"
+                    children={<SearchIcon color="gray.300" />}
+                  />
+                  <Input type="text" placeholder="Buscar" />
+                </InputGroup>
+              </Stack> */}
+              <Flex direction="column">
+                {
+                  sections()
+                }
+              </Flex>
+            </>
+          )}
+        </>
+        }
+        
         </Card>
       </GridItem>
     </div>
