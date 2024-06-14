@@ -1,11 +1,11 @@
 import React from 'react';
 import { Box, Card, CardBody, Stack, Heading, Text, CardFooter, ButtonGroup, Button } from '@chakra-ui/react';
 import { useRouter } from "next/navigation";
-const RestaurantCard = ({restaurant}) => {
+const RestaurantCard = ({restaurant, openModalForEdit}) => {
   const router = useRouter();
 
   const handleEdit = () => {
-    console.log('Edit');
+    openModalForEdit(restaurant.id) 
   }
 
   const handleMenu = () => {

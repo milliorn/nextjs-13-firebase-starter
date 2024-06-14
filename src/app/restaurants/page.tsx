@@ -14,19 +14,29 @@ import firebase_app from "../../firebase/config";
 import { getDatabase, ref, set } from "firebase/database";
 import { collection, getFirestore, onSnapshot, query, where } from "firebase/firestore";
 import { useAuthContext } from "../../context/AuthContext";
+import { validateLocaleAndSetLanguage } from "typescript";
 
 export default function Page() {
   const refScreen = useRef(null);
   const [isOpen, setIsOpen] = useState(false);
   const [restaurants, setRestaurants] = useState([]);
+  const [restaurant, setRestaurant] = useState(null);
   const context = useAuthContext();
   useEffect(() => {
     if (refScreen.current) {
       refScreen.current.style.maxHeight = `${window.innerHeight}px`;
     }
   }, []);
+  
+  const openModalForEdit = (id) => {
+    console.log(restaurants)
+    const restaurantForEdit:any= restaurants.find((restaurant) => restaurant.id == id );
+    setRestaurant(restaurantForEdit)
+    setIsOpen(!isOpen)
+  }
 
   const changeIsOpenModal = () => {
+    setRestaurant(null);
     setIsOpen(!isOpen);
   }
 
@@ -56,13 +66,13 @@ export default function Page() {
         </Button>
         <Card margin={5} height={'100%'}>
           <SimpleGrid columns={[1, 3, 4]} scrollBehavior={'auto'} maxHeight={['100%','100%','100%','100%']}   overflowY="scroll">
-            {restaurants.map((restaurant) => (
-              <RestaurantCard restaurant={restaurant} key={restaurant.id} />
+            {restaurants.map((restaurantItem) => (
+              <RestaurantCard restaurant={restaurantItem} openModalForEdit={openModalForEdit} />
             ))}
           </SimpleGrid>
         </Card>
       </GridItem>
-      <RestaurantModal isOpen={isOpen} close={changeIsOpenModal} />
+      <RestaurantModal isOpen={isOpen} close={changeIsOpenModal} restaurant={restaurant}/>
     </div>
   )
 }

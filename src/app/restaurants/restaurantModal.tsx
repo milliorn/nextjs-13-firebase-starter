@@ -19,8 +19,9 @@ import { getFirestore } from 'firebase/firestore';
 import firebase_app from '@/firebase/config';
 import { collection, addDoc } from 'firebase/firestore';
 
-const RestaurantModal: React.FC = ({isOpen, close}:any) => {
+const RestaurantModal: React.FC = ({isOpen, close, restaurant}:any) => {
   const context = useAuthContext();
+  const [initialValues, setInitialValues] = useState(null)
   const handleSubmit = async (values :any ) => {
     console.log('Form values:', values);
 
@@ -40,6 +41,29 @@ const RestaurantModal: React.FC = ({isOpen, close}:any) => {
       console.error('Error adding document: ', error);
     });
   };
+  
+  useEffect(() => {
+    if(restaurant==null){
+      setInitialValues({ 
+                name: '',
+                description: '',
+                address: '',
+                phone: '',
+                instagram: ''
+      })
+    }else{
+      console.log(restaurant)
+      setInitialValues({
+        name: restaurant.name,
+        description: restaurant.description,
+        address:  restaurant.address,
+        phone: restaurant.phone,
+        instagram: restaurant.instagram
+      })
+    }
+
+
+  },[restaurant])
 
   const  handleOnClose = () => {
     close();
@@ -51,13 +75,7 @@ const RestaurantModal: React.FC = ({isOpen, close}:any) => {
         <ModalOverlay />
         <ModalContent>
         <Formik
-              initialValues={{ 
-                name: '',
-                description: '',
-                address: '',
-                phone: '',
-                instagram: ''
-              }}
+              initialValues={initialValues}
               onSubmit={handleSubmit}
             >
               <Form>
