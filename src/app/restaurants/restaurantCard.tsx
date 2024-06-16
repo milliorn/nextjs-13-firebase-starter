@@ -1,6 +1,7 @@
 import React from 'react';
-import { Box, Card, CardBody, Stack, Heading, Text, CardFooter, ButtonGroup, Button } from '@chakra-ui/react';
+import { CloseButton, Flex, Spacer, Box, Card, CardBody, Stack, Heading, Text, CardFooter, ButtonGroup, Button } from '@chakra-ui/react';
 import { useRouter } from "next/navigation";
+import { CloseIcon } from '@chakra-ui/icons';
 const RestaurantCard = ({restaurant, openModalForEdit}) => {
   const router = useRouter();
 
@@ -23,7 +24,11 @@ const RestaurantCard = ({restaurant, openModalForEdit}) => {
                 borderRadius='lg'
               /> */}
               <Stack spacing='1'>
+              <Flex direction={'row'}>
                 <Heading size='sm'>{restaurant.name}</Heading>
+                <Spacer/>
+                <CloseButton size="sm"/>
+              </Flex>
                 <Text size='xs'>
                   {restaurant.description}
                 </Text> 
