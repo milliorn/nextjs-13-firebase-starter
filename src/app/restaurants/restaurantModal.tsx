@@ -42,6 +42,7 @@ const RestaurantModal: React.FC = ({isOpen, close, restaurant}:any) => {
     addDoc(collection(db, 'restaurants'), {
       ...values,
       ownerId: user?.uid,
+      delete: false,
     })
     .then((docRef) => {
       console.log('Document written with ID: ', docRef.id);

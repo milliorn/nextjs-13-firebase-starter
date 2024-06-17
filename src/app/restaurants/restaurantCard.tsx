@@ -2,7 +2,7 @@ import React from 'react';
 import { CloseButton, Flex, Spacer, Box, Card, CardBody, Stack, Heading, Text, CardFooter, ButtonGroup, Button } from '@chakra-ui/react';
 import { useRouter } from "next/navigation";
 import { CloseIcon } from '@chakra-ui/icons';
-const RestaurantCard = ({restaurant, openModalForEdit}) => {
+const RestaurantCard = ({restaurant, openModalForEdit, deleteRestaurant}) => {
   const router = useRouter();
 
   const handleEdit = () => {
@@ -11,6 +11,10 @@ const RestaurantCard = ({restaurant, openModalForEdit}) => {
 
   const handleMenu = () => {
     router.push( `/restaurant/${restaurant.id}/menus` );
+  }
+
+  const hanldeDeleteRestaurant = () => {
+    deleteRestaurant(restaurant.id);
   }
 
   return (
@@ -27,7 +31,7 @@ const RestaurantCard = ({restaurant, openModalForEdit}) => {
               <Flex direction={'row'}>
                 <Heading size='sm'>{restaurant.name}</Heading>
                 <Spacer/>
-                <CloseButton size="sm"/>
+                <CloseButton onClick={hanldeDeleteRestaurant} size="sm"/>
               </Flex>
                 <Text size='xs'>
                   {restaurant.description}
