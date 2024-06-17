@@ -1,12 +1,16 @@
 import React from 'react';
-import { Box, Card, CardBody, Stack, Heading, Text, CardFooter, ButtonGroup, Button } from '@chakra-ui/react';
+import { Box, Card, CardBody, Stack, Heading, Text, CardFooter, ButtonGroup, Button, CloseButton, Flex, Spacer } from '@chakra-ui/react';
 import { useParams, useRouter } from "next/navigation";
-const MenuCard = ({menu}:any) => {
+const MenuCard = ({menu, deleteMenu}:any) => {
   const router = useRouter();
   const id : any = useParams().id;
 
   const handleMenu = () => {
     router.push(`/restaurant/${id}/menu/${menu.id}`);
+  }
+
+  const hanldeDeleteMenu = () => {
+    deleteMenu(menu.id);
   }
 
   return (
@@ -20,7 +24,11 @@ const MenuCard = ({menu}:any) => {
                 borderRadius='lg'
               /> */}
               <Stack spacing='1'>
+              <Flex direction={'row'}>
                 <Heading size='sm'>{menu.name}</Heading>
+                <Spacer/>
+                <CloseButton onClick={hanldeDeleteMenu} size="sm"/>
+              </Flex>
                 <Text size='xs'>
                   {menu.description}
                 </Text> 

@@ -7,6 +7,7 @@ restaurants
   address
   phone
   instagramUser
+  primaryMenu
 
 
 menus

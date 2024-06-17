@@ -12,7 +12,7 @@ import BreadcrumComponent from "../../../components/breadcrum";
 import MenuModal from "./MenuModal";
 import firebase_app from "../../../../firebase/config";
 import { getDatabase, ref, set } from "firebase/database";
-import { collection, getFirestore, onSnapshot, query, where } from "firebase/firestore";
+import { collection, doc, getFirestore, onSnapshot, query, updateDoc, where } from "firebase/firestore";
 import { useAuthContext } from "../../../../context/AuthContext";
 import Head from "next/head";
 import { useParams, useRouter } from "next/navigation";
@@ -23,20 +23,35 @@ export default function Page() {
   const [isOpen, setIsOpen] = useState(false);
   const [menus, setMenus] = useState([]);
   const context = useAuthContext();
+
+  const changeIsOpenModal = () => {
+    setIsOpen(!isOpen);
+  }
+
+  const deleteMenu = async (id:any) => {
+    try {
+        const db = getFirestore(firebase_app);
+        const menuDocRed = doc(db, 'menus', id);
+        await updateDoc(menuDocRed, {delete: true});   
+        console.log('Document updated successfully!');
+    } catch (error) {
+        console.error('Error updating document: ', error);
+    }
+  }
+
   useEffect(() => {
     if (refScreen.current) {
       refScreen.current.style.maxHeight = `${window.innerHeight}px`;
     }
   }, []);
 
-  const changeIsOpenModal = () => {
-    setIsOpen(!isOpen);
-  }
-
   useEffect(() => {
     const db = getFirestore(firebase_app);
     const menusRef = collection(db, 'menus');
-    const q = query(menusRef, where("restaurantId", "==", id));
+    const q = query(menusRef,
+                    where("restaurantId", "==", id),
+                    where("delete", "==", false)
+                  );
 
     const unsub = onSnapshot(q, (snapshot) => {
       const data :any = snapshot.docs.map(doc => ({...doc.data(), id: doc.id}));
@@ -60,7 +75,7 @@ export default function Page() {
         {menus.length != 0 ?
           <SimpleGrid columns={[1, 3, 4]} scrollBehavior={'auto'} maxHeight={['100%','100%','100%','100%']}   overflowY="scroll">
              {menus.map((menu) => (
-              <MenuCard menu={menu} key={menu.id} />
+              <MenuCard menu={menu} key={menu.id} deleteMenu={deleteMenu}/>
             ))} 
           </SimpleGrid>
           : <Heading >No hay menus</Heading>}
