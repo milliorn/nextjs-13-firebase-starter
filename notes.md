@@ -13,7 +13,8 @@ restaurants
 menus
   id
   description
-  primary
+  primary,
+  restaurantName
   SECTIONS:[
     {
       id:
