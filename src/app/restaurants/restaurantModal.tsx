@@ -15,20 +15,30 @@ import {
 } from '@chakra-ui/react';
 import { getDatabase, ref, push, set } from 'firebase/database';
 import { useAuthContext } from '@/context/AuthContext';
-import { getFirestore } from 'firebase/firestore';
+import { doc, getFirestore, updateDoc } from 'firebase/firestore';
 import firebase_app from '@/firebase/config';
 import { collection, addDoc } from 'firebase/firestore';
 
 const RestaurantModal: React.FC = ({isOpen, close, restaurant}:any) => {
   const context = useAuthContext();
   const [initialValues, setInitialValues] = useState(null)
+
+
   const handleSubmit = async (values :any ) => {
     console.log('Form values:', values);
-
     console.log('User:', (context as any).user);
     const db = getFirestore(firebase_app);
     const user = (context as any).user;
 
+    if(values.id){
+      updateRestaurant(db, user, values)
+    }else{
+      createRestaurant(db, user, values)
+    }
+    close(); 
+  };
+
+  const createRestaurant = async (db:any, user:any,values :any) => {
     addDoc(collection(db, 'restaurants'), {
       ...values,
       ownerId: user?.uid,
@@ -40,11 +50,24 @@ const RestaurantModal: React.FC = ({isOpen, close, restaurant}:any) => {
     .catch((error) => {
       console.error('Error adding document: ', error);
     });
-  };
+  }
+
+  const updateRestaurant = async (db:any, user:any, values :any) => {
+    try {
+        console.log(restaurant)
+        const db = getFirestore(firebase_app);
+        const restaurantDocRed = doc(db, 'restaurants', restaurant.id);
+        await updateDoc(restaurantDocRed, values);   
+        console.log('Document updated successfully!');
+    } catch (error) {
+        console.error('Error updating document: ', error);
+    }
+  }
   
   useEffect(() => {
     if(restaurant==null){
       setInitialValues({ 
+                id:null,
                 name: '',
                 description: '',
                 address: '',
@@ -54,6 +77,7 @@ const RestaurantModal: React.FC = ({isOpen, close, restaurant}:any) => {
     }else{
       console.log(restaurant)
       setInitialValues({
+        id: restaurant.id,
         name: restaurant.name,
         description: restaurant.description,
         address:  restaurant.address,

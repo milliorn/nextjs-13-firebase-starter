@@ -9,16 +9,15 @@ const FormMenu = ({menu, menuId}:any) => {
 
   const handleSubmit = async (values :any) => {
     try {
-      console.log(menu)
+        console.log(menu)
         const db = getFirestore(firebase_app);
         const menuDocRed = doc(db, 'menus', menuId);
-       await updateDoc(menuDocRed, values);
-        
+        await updateDoc(menuDocRed, values);   
         console.log('Document updated successfully!');
     } catch (error) {
         console.error('Error updating document: ', error);
     }
-};
+  };
   
   return (
     <div>
