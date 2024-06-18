@@ -120,6 +120,21 @@ export default function Page() {
                 <GridItem colSpan={4} bg='yellow:200' >
                   <FormSection menuId={menuId} refreshList={handleRefreshSections}/>
                   <SectionList sections={sections}/>
+                  <Flex>
+                    <Box w='15' h='10' />
+                    <Spacer />
+                  <Box borderRadius='md' w='50%' px={4} border="1px solid grey" >
+                    <Flex>
+                        <Heading size={'md'}>seccion 1</Heading>
+                        <Spacer/>
+                        <Button border='1' size={'sm'}>a</Button>
+                        <Button border='1' size={'sm'}>b</Button>
+                    </Flex>
+                  </Box>
+                  <Spacer />
+                  <Box w='15' h='10' />
+                  </Flex>
+
                 </GridItem>
                 <GridItem colSpan={4} bg='tomato' >
                   <CardBody>
