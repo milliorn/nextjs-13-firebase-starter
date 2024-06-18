@@ -7,12 +7,14 @@ import FormSection from '../../../../sections/formSection';
 import SectionList from '../../../../sections/sectionList';
 import ProductsList from '../../../../products/productList';
 import ProductModal from '../../../../products/productModal';
-import {Center, Grid, GridItem, Input, InputGroup, InputLeftElement, Text } from '@chakra-ui/react'
+import {Center, CloseButton, Grid, GridItem, IconButton, Input, InputGroup, InputLeftElement, Text } from '@chakra-ui/react'
 import { Flex, Spacer, Box, Divider, Image, Heading, ButtonGroup, Button, Stack, SimpleGrid, FormControl, FormLabel, FormHelperText, Textarea } from '@chakra-ui/react' 
 import { Card, CardHeader, CardBody } from '@chakra-ui/react'
 import { useParams, useRouter } from "next/navigation";
 import { collection, doc, getDoc, getFirestore, onSnapshot, query, where } from "firebase/firestore";
 import firebase_app from "@/firebase/config";
+import { CloseIcon, EditIcon } from "@chakra-ui/icons";
+import Sections from "@/app/sections";
 
 export default function Page() {
   const menuId : any = useParams().menuId;
@@ -120,20 +122,7 @@ export default function Page() {
                 <GridItem colSpan={4} bg='yellow:200' >
                   <FormSection menuId={menuId} refreshList={handleRefreshSections}/>
                   <SectionList sections={sections}/>
-                  <Flex>
-                    <Box w='15' h='10' />
-                    <Spacer />
-                  <Box borderRadius='md' w='50%' px={4} border="1px solid grey" >
-                    <Flex>
-                        <Heading size={'md'}>seccion 1</Heading>
-                        <Spacer/>
-                        <Button border='1' size={'sm'}>a</Button>
-                        <Button border='1' size={'sm'}>b</Button>
-                    </Flex>
-                  </Box>
-                  <Spacer />
-                  <Box w='15' h='10' />
-                  </Flex>
+                  <Sections/>
 
                 </GridItem>
                 <GridItem colSpan={4} bg='tomato' >
