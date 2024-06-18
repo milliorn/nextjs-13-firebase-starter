@@ -1,11 +1,22 @@
 import { CloseIcon, EditIcon } from '@chakra-ui/icons';
 import { CloseButton, Flex, Spacer, Box, Card, CardBody, Stack, Heading, Text, CardFooter, ButtonGroup, Button, IconButton } from '@chakra-ui/react'
 import SectionModal from './SectionModal'
+import { useState } from 'react';
 
-const Sections = () => {  
+const Sections = ({menu}:any) => {
+  const [isOpen, setIsOpen] = useState(false)
+
+  const openModal = () => {
+    setIsOpen(true)
+  }
+
+  const closeModal = () => {
+    setIsOpen(false)
+  }
+
   return(
     <>
-      <Button>Agregar Seccion</Button>
+      <Button onClick={openModal}>Agregar Seccion</Button>
       <Flex>
         <Box w='15' h='10' />
         <Spacer />
@@ -20,7 +31,7 @@ const Sections = () => {
         <Spacer />
         <Box w='15' h='10' />
       </Flex>
-      <SectionModal />
+      <SectionModal isOpen={isOpen} close={closeModal} menu={menu}/>
     </>
   )
 }

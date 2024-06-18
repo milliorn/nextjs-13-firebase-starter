@@ -31,6 +31,7 @@ const MenuModal: React.FC = ({isOpen, close, restaurantId}:any) => {
     addDoc(collection(db, 'menus'), {
       ...values,
       restaurantId: restaurantId,
+      sections:[],
       delete: false,
     })
     .then((docRef) => {

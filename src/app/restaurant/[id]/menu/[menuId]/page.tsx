@@ -122,7 +122,7 @@ export default function Page() {
                 <GridItem colSpan={4} bg='yellow:200' >
                   <FormSection menuId={menuId} refreshList={handleRefreshSections}/>
                   <SectionList sections={sections}/>
-                  <Sections/>
+                  <Sections menu={menu}/>
 
                 </GridItem>
                 <GridItem colSpan={4} bg='tomato' >
