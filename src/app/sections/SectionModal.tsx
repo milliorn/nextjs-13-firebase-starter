@@ -15,7 +15,7 @@ import {
 } from '@chakra-ui/react';
 import { doc, getFirestore, updateDoc } from 'firebase/firestore';
 import firebase_app from '@/firebase/config';
-
+import { v4 as uuidv4 } from 'uuid';
 const SectionModal = ({close, isOpen, section, menu}:any) => {
   const [initialValues, setInitialValues] = useState(null)
   
@@ -34,9 +34,10 @@ const SectionModal = ({close, isOpen, section, menu}:any) => {
 
   const createSection = async (db:any,values :any) => {
     console.log(menu)
+    const newValues = {...values, id: uuidv4()}
     const menuDocRed = doc(db, 'menus', menu.id);
     const newSection = menu.sections;
-    newSection.push(values);
+    newSection.push(newValues);
     await updateDoc(menuDocRed, {sections: newSection});   
     console.log('Document updated successfully!');
     
