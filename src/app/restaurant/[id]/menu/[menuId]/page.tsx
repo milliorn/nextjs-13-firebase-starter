@@ -38,7 +38,8 @@ export default function Page() {
   
     if (menuDocSnap.exists()) {
       console.log("Menu data:", menuDocSnap.data());
-      setMenu(menuDocSnap.data()); // Specify the type of `menu` as `null`
+      const newMenu = {...menuDocSnap.data(), id: menuDocSnap.id}
+      setMenu(newMenu); // Specify the type of `menu` as `null`
     } else {
       console.log("No such menu!");
     }
