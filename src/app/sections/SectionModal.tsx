@@ -24,7 +24,7 @@ const SectionModal = ({close, isOpen, section, menu}:any) => {
     const db = getFirestore(firebase_app);
 
     if(values.id){
-      //updateRestaurant(db, values)
+      updateRestaurant(db, values)
     }else{
       createSection(db, values)
     }
@@ -54,16 +54,27 @@ const SectionModal = ({close, isOpen, section, menu}:any) => {
     }); */
   }
 
-/*   const updateRestaurant = async (db:any, values :any) => {
+   const updateRestaurant = async (db:any, values :any) => {
     try {
-        const db = getFirestore(firebase_app);
-        const restaurantDocRed = doc(db, 'restaurants', restaurant.id);
-        await updateDoc(restaurantDocRed, values);   
+        const menuDocRef = doc(db, 'menus', menu.id);
+        const array = menu.sections;
+
+        // Find the index of the object to update
+        const index = array.findIndex(item => item.id === values.id);
+
+    
+        // Update the object
+        array[index] = { ...array[index], ...values };
+
+        // Update the document with the modified array
+        await updateDoc(menuDocRef, {
+          sections: array
+        });   
         console.log('Document updated successfully!');
     } catch (error) {
         console.error('Error updating document: ', error);
     }
-  } */
+  } 
   
   useEffect(() => {
     if(section==null){
