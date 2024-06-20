@@ -16,7 +16,7 @@ import {
 import { doc, getFirestore, updateDoc } from 'firebase/firestore';
 import firebase_app from '@/firebase/config';
 import { v4 as uuidv4 } from 'uuid';
-const SectionModal = ({close, isOpen, section, menu}:any) => {
+const SectionModal = ({close, isOpen, idSection, menu}:any) => {
   const [initialValues, setInitialValues] = useState(null)
   
   const handleSubmit = async (values :any ) => {
@@ -67,13 +67,14 @@ const SectionModal = ({close, isOpen, section, menu}:any) => {
   } 
   
   useEffect(() => {
-    if(section==null){
+    if(idSection==null){
       setInitialValues({ 
                 id:null,
                 name: '',
                 description: ''
       })
     }else{
+      const section = menu.sections.find((item) => item.id === idSection)
       setInitialValues({
         id: section.id,
         name: section.name,
@@ -82,7 +83,7 @@ const SectionModal = ({close, isOpen, section, menu}:any) => {
     }
 
 
-  },[section])
+  },[idSection])
 
   const  handleOnClose = () => {
     close();

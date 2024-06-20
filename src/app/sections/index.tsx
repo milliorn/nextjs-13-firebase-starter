@@ -6,6 +6,13 @@ import Section from './Section';
 
 const Sections = ({menu}:any) => {
   const [isOpen, setIsOpen] = useState(false)
+  const [idSectionForEdit, setIdSectionForEdit] = useState();
+
+
+  const edit = (id:any) => {
+    setIdSectionForEdit(id)
+    openModal()
+  }
 
   const openModal = () => {
     setIsOpen(true)
@@ -22,12 +29,12 @@ const Sections = ({menu}:any) => {
         <List width={'100%'}>
           {menu.sections.map((section:any) => (
           <ListItem>
-            <Section section={section}/> 
+            <Section onEdit={edit} section={section}/> 
           </ListItem>
           ))} 
         </List>
       </Flex>
-      <SectionModal isOpen={isOpen} close={closeModal} menu={menu}/>
+      <SectionModal isOpen={isOpen} close={closeModal} menu={menu} idSection={idSectionForEdit} />
     </>
   )
 }
