@@ -1,7 +1,8 @@
 import { CloseIcon, EditIcon } from '@chakra-ui/icons';
-import { CloseButton, Flex, Spacer, Box, Card, CardBody, Stack, Heading, Text, CardFooter, ButtonGroup, Button, IconButton } from '@chakra-ui/react'
+import { CloseButton, Flex, Spacer, Box, List, ListItem, Stack, Heading, Text, CardFooter, ButtonGroup, Button, IconButton } from '@chakra-ui/react'
 import SectionModal from './SectionModal'
 import { useState } from 'react';
+import Section from './Section';
 
 const Sections = ({menu}:any) => {
   const [isOpen, setIsOpen] = useState(false)
@@ -17,19 +18,14 @@ const Sections = ({menu}:any) => {
   return(
     <>
       <Button onClick={openModal}>Agregar Seccion</Button>
-      <Flex>
-        <Box w='15' h='10' />
-        <Spacer />
-        <Box borderRadius='md' w='50%' px={4} border="1px solid grey" >
-          <Flex>
-            <Heading margin={1} size={'md'}>seccion 1</Heading>
-            <Spacer/>
-            <IconButton aria-label="Editar" margin='1' size={'sm'} icon={<EditIcon />} />
-            <IconButton aria-label="Close" margin='1' size={'sm'} icon={<CloseIcon />} />
-          </Flex>
-        </Box>
-        <Spacer />
-        <Box w='15' h='10' />
+      <Flex>        
+        <List width={'100%'}>
+          {menu.sections.map((section:any) => (
+          <ListItem>
+            <Section section={section}/> 
+          </ListItem>
+          ))} 
+        </List>
       </Flex>
       <SectionModal isOpen={isOpen} close={closeModal} menu={menu}/>
     </>

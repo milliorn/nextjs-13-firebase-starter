@@ -41,17 +41,7 @@ const SectionModal = ({close, isOpen, section, menu}:any) => {
     await updateDoc(menuDocRed, {sections: newSection});   
     console.log('Document updated successfully!');
     
-    /* addDoc(collection(db, 'restaurants'), {
-      ...values,
-      delete: false,
-    })
-    .then((docRef) => {
-      console.log('Document written with ID: ', docRef.id);
-      close();
-    })
-    .catch((error) => {
-      console.error('Error adding document: ', error);
-    }); */
+
   }
 
    const updateRestaurant = async (db:any, values :any) => {
@@ -60,7 +50,7 @@ const SectionModal = ({close, isOpen, section, menu}:any) => {
         const array = menu.sections;
 
         // Find the index of the object to update
-        const index = array.findIndex(item => item.id === values.id);
+        const index = array.findIndex((item:any) => item.id === values.id);
 
     
         // Update the object
