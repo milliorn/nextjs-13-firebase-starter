@@ -1,10 +1,14 @@
 import { Flex,Heading,Spacer,IconButton, Box } from "@chakra-ui/react";
 import { CloseIcon, EditIcon } from '@chakra-ui/icons';
-const Section = ({section, onEdit}:any) => {
+const Section = ({section, onEdit, onDelete}:any) => {
   
   const editHandle = () => {
-    console.log("asd")
     onEdit(section.id)
+  }
+
+  const handleDelete = () => {
+    console.log("delete")
+    onDelete(section.id)
   }
 
   return(
@@ -14,7 +18,7 @@ const Section = ({section, onEdit}:any) => {
           <Heading margin={1} size={'md'}>{section.name}</Heading>
           <Spacer/>
           <IconButton onClick={() => editHandle()} aria-label="Editar" margin='1' size={'sm'} icon={<EditIcon />} />
-          <IconButton aria-label="Close" margin='1' size={'sm'} icon={<CloseIcon />} />
+          <IconButton onClick={() => handleDelete()} aria-label="Close" margin='1' size={'sm'} icon={<CloseIcon />} />
         </Flex>
       </Box>
     </>
