@@ -76,7 +76,9 @@ export default function Page() {
   const handleRefreshProducts = () => {
     getProducts()
   }
-
+  const refreshMenu = ()=> {
+    getMenu(menuId)
+  }
   useEffect(() => {
     getMenu(menuId);
     getSections();
@@ -121,7 +123,7 @@ export default function Page() {
                   </CardBody>
                 </GridItem>
                 <GridItem colSpan={4} bg='yellow:200' >
-                  <Sections menu={menu}/>
+                  <Sections menu={menu} onGetMenu={refreshMenu}/>
                 </GridItem>
                 <GridItem colSpan={4} bg='tomato' >
                   <CardBody>

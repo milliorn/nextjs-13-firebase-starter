@@ -6,7 +6,7 @@ import Section from './Section';
 import { doc, getFirestore, updateDoc } from 'firebase/firestore';
 import firebase_app from '@/firebase/config';
 
-const Sections = ({menu}:any) => {
+const Sections = ({menu, onGetMenu}:any) => {
   const [isOpen, setIsOpen] = useState(false)
   const [idSectionForEdit, setIdSectionForEdit] = useState();
 
@@ -30,6 +30,7 @@ const Sections = ({menu}:any) => {
       await updateDoc(menuDocRef, {
         sections: newSections
       });   
+      onGetMenu()
       console.log('Document updated successfully!');
     } catch (error) {
         console.error('Error updating document: ', error);
