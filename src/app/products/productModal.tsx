@@ -12,11 +12,12 @@ import {
   FormControl,
   Input,
   Stack,
+  Select
 } from '@chakra-ui/react';
 import { addDoc, collection, getFirestore } from 'firebase/firestore';
 import firebase_app from '@/firebase/config';
 
-const ProductModal: React.FC = ({ menuId, refreshList, isOpen, close } : any) => {
+const ProductModal: React.FC = ({ menu, refreshList, isOpen, close } : any) => {
 
   const[product, setProduct] = useState({name: '', description: ''})
   const handleSubmit = async (values: any) => {
@@ -24,7 +25,7 @@ const ProductModal: React.FC = ({ menuId, refreshList, isOpen, close } : any) =>
     const db = getFirestore(firebase_app);
     addDoc(collection(db, 'products'), {
       ...values,
-      menuId: menuId,
+      menuId: menu.id,
     })
     .then((docRef) => {
       console.log('Document written with ID: ', docRef.id);
@@ -73,10 +74,23 @@ const ProductModal: React.FC = ({ menuId, refreshList, isOpen, close } : any) =>
                   <Field name="price">
                     {({ field }:any) => (
                       <FormControl>
-                        <Input {...field} type="text" placeholder="Precio" />
+                        <Input {...field} type="text" placeholder="Preciao" />
                       </FormControl>
                     )}
                   </Field>
+                 <Field name="section">
+                  {({ field }:any) => (
+                  <FormControl>
+                    <Select {...field} placeholder="Seleccione una seccion">
+                          {
+                            menu.sections.map((section) => (
+                              <option value={section.name}>{section.name}</option>
+                            ))
+                          }
+                    </Select>
+                  </FormControl>
+                  )}
+                </Field>
                 </Stack>
           </ModalBody>
           <ModalFooter>

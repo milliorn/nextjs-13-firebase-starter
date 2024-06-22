@@ -15,6 +15,7 @@ import { collection, doc, getDoc, getFirestore, onSnapshot, query, where } from 
 import firebase_app from "@/firebase/config";
 import { CloseIcon, EditIcon } from "@chakra-ui/icons";
 import Sections from "@/app/sections";
+import Products from "@/app/products";
 
 export default function Page() {
   const menuId : any = useParams().menuId;
@@ -22,7 +23,6 @@ export default function Page() {
   const [menu, setMenu] :any = useState(null);
   const [sections, setSections] : any = useState([]);
   const [products, setProducts] : any = useState([]);
-  const [isOpen, setIsOpen] = useState(false);
 
   useEffect(() => {
     if (ref.current) {
@@ -85,10 +85,6 @@ export default function Page() {
     getProducts();
   }, []);
 
-  const changeIsOpenModal = () => {
-    console.log('new product')
-    setIsOpen(!isOpen);
-  }
   
   return (
     <div ref={ref} >
@@ -126,15 +122,7 @@ export default function Page() {
                   <Sections menu={menu} onGetMenu={refreshMenu}/>
                 </GridItem>
                 <GridItem colSpan={4} bg='tomato' >
-                  <CardBody>
-                    <Heading as='h2' size='md'>Productos</Heading>
-                  </CardBody>
-                  <Button 
-                    onClick={changeIsOpenModal}
-                    marginLeft={5} color="orange" variant="solid" >
-                    Nuevo Productos
-                  </Button>
-                  <ProductsList products={products}/>
+                  <Products menu={menu} onRefreshMenu={refreshMenu} />
                 </GridItem>
               </Grid>
             </Card>
@@ -145,7 +133,6 @@ export default function Page() {
           </Center>
         )}
       </GridItem>  
-    <ProductModal isOpen={isOpen} close={changeIsOpenModal}  refreshList={handleRefreshProducts}  menuId={menuId}/>
-</div>
+    </div>
   )
 }
