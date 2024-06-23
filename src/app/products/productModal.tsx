@@ -14,14 +14,16 @@ import {
   Stack,
   Select
 } from '@chakra-ui/react';
-import { addDoc, collection, getFirestore } from 'firebase/firestore';
+import { v4 as uuidv4 } from 'uuid';
+import { updateDoc, getFirestore,doc } from 'firebase/firestore';
 import firebase_app from '@/firebase/config';
-
 const ProductModal: React.FC = ({ menu, refreshList, isOpen, close } : any) => {
 
   const[product, setProduct] = useState({name: '', description: ''})
+  
+
   const handleSubmit = async (values: any) => {
-    console.log('Form values:', values);
+    /*console.log('Form values:', values);
     const db = getFirestore(firebase_app);
     addDoc(collection(db, 'products'), {
       ...values,
@@ -34,7 +36,32 @@ const ProductModal: React.FC = ({ menu, refreshList, isOpen, close } : any) => {
     })
     .catch((error) => {
       console.error('Error adding document: ', error);
-    });
+    });*/
+    const db = getFirestore(firebase_app);
+ 
+    try {
+        const menuDocRef = doc(db, 'menus', menu.id);
+        const newSections = menu.sections;
+
+        // Find the index of the object to update
+        console.log(values)
+        const index = newSections.findIndex((item:any) => item.id === values.section);
+        const newValues =  {...values, id: uuidv4()}
+    
+        // Update the object
+        //newSections[index] = { ...newSections[index], newValues };
+        const products = menu.sections[index].products
+        products.push(newValues)
+        newSections[index] = { ...newSections[index], products: products };
+        // Update the document with the modified array
+        await updateDoc(menuDocRef, {
+          sections: newSections
+        });   
+        console.log('Document updated successfully!');
+    } catch (error) {
+        console.error('Error updating document: ', error);
+    }
+    
   } 
   const  handleOnClose = () => {
     close();
@@ -53,7 +80,7 @@ const ProductModal: React.FC = ({ menu, refreshList, isOpen, close } : any) => {
               onSubmit={handleSubmit}
             >
           <Form>
-          <ModalHeader>Nuevo Producto</ModalHeader>
+          <ModalHeader>Nuevo Producto1</ModalHeader>
           <ModalCloseButton onClick={() => handleOnClose} />
           <ModalBody>
                 <Stack spacing={4}>
@@ -84,7 +111,7 @@ const ProductModal: React.FC = ({ menu, refreshList, isOpen, close } : any) => {
                     <Select {...field} placeholder="Seleccione una seccion">
                           {
                             menu.sections.map((section) => (
-                              <option value={section.name}>{section.name}</option>
+                              <option value={section.id}>{section.name}</option>
                             ))
                           }
                     </Select>

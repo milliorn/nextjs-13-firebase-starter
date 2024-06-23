@@ -1,6 +1,6 @@
 import React,{useState}  from 'react'
 import { CardBody, Heading, Button } from "@chakra-ui/react";
-import ProductModal from './ProductModal';
+import ProductModal from './productModal';
 
 const Products = ({menu, onRefreshMenu}) => {
   const [isOpen, setIsOpen] = useState(false);
