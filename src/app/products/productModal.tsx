@@ -58,6 +58,8 @@ const ProductModal: React.FC = ({ menu, refreshList, isOpen, close } : any) => {
           sections: newSections
         });   
         console.log('Document updated successfully!');
+        close()
+        refreshList();
     } catch (error) {
         console.error('Error updating document: ', error);
     }
