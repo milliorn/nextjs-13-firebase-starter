@@ -31,7 +31,7 @@ export default function Menu() {
         const queryRestaurantName = replaceSpaces(restaurantName);
 
         console.log(queryRestaurantName);
-        const q = query(collection(db, "restaurants"), where("name", "==", queryRestaurantName));
+        const q = query(collection(db, "menu"), where("name", "==", queryRestaurantName));
         const querySnapshot = await getDocs(q);
 
         if (!querySnapshot.empty) {

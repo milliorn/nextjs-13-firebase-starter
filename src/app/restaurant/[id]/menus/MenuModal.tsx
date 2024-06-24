@@ -20,12 +20,12 @@ import firebase_app from '@/firebase/config';
 import { collection, addDoc } from 'firebase/firestore';
 import { useRouter } from 'next/navigation';
 
-const MenuModal: React.FC = ({isOpen, close, restaurantId}:any) => {
+const MenuModal: React.FC = ({isOpen, close, restaurantId, restaurant}:any) => {
   const context = useAuthContext();
   const handleSubmit = async (values :any ) => {
     console.log('Form values:', values);
-
-    console.log('User:', (context as any).user);
+    
+    console.log('rest', restaurant);
     const db = getFirestore(firebase_app);
 
     addDoc(collection(db, 'menus'), {
@@ -33,6 +33,7 @@ const MenuModal: React.FC = ({isOpen, close, restaurantId}:any) => {
       restaurantId: restaurantId,
       sections:[],
       delete: false,
+      restaurantName: restaurant.name
     })
     .then((docRef) => {
       console.log('Document written with ID: ', docRef.id);

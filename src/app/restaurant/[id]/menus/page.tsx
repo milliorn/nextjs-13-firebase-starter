@@ -12,7 +12,8 @@ import BreadcrumComponent from "../../../components/breadcrum";
 import MenuModal from "./MenuModal";
 import firebase_app from "../../../../firebase/config";
 import { getDatabase, ref, set } from "firebase/database";
-import { collection, doc, getFirestore, onSnapshot, query, updateDoc, where } from "firebase/firestore";
+
+import { collection,getDocs,getDoc, doc, getFirestore, onSnapshot, query, updateDoc, where } from "firebase/firestore";
 import { useAuthContext } from "../../../../context/AuthContext";
 import Head from "next/head";
 import { useParams, useRouter } from "next/navigation";
@@ -22,6 +23,7 @@ export default function Page() {
   const refScreen = useRef(null);
   const [isOpen, setIsOpen] = useState(false);
   const [menus, setMenus] = useState([]);
+  const [restaurant, setRestaurant] = useState(null);
   const context = useAuthContext();
 
   const changeIsOpenModal = () => {
@@ -64,6 +66,18 @@ export default function Page() {
     }
   }, []);
 
+    useEffect(() => {
+    const getRestaurant = async () => {
+    const db = getFirestore(firebase_app);
+         const docRef = doc(db,'restaurants', id);
+        const docSnap = await getDoc(docRef);
+    console.log(docSnap.data())
+    setRestaurant(docSnap.data());
+    }
+
+    getRestaurant()
+  }, []);
+
   return (
     <div ref={refScreen} >
       <GridItem area={'nav'}  rowSpan={7} colSpan={5}>
@@ -81,7 +95,7 @@ export default function Page() {
           : <Heading >No hay menus</Heading>}
         </Card>
       </GridItem>
-      <MenuModal isOpen={isOpen} close={changeIsOpenModal} restaurantId={id} />
+      <MenuModal isOpen={isOpen} close={changeIsOpenModal} restaurantId={id} restaurant={restaurant} />
     </div>
   )
 }
