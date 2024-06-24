@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Formik, Form, Field } from 'formik';
 import {
   Modal,
@@ -17,10 +17,9 @@ import {
 import { v4 as uuidv4 } from 'uuid';
 import { updateDoc, getFirestore,doc } from 'firebase/firestore';
 import firebase_app from '@/firebase/config';
-const ProductModal: React.FC = ({ menu, refreshList, isOpen, close } : any) => {
-
-  const[product, setProduct] = useState({name: '', description: ''})
-  
+import { m } from 'framer-motion';
+const ProductModal: React.FC = ({ product, menu, refreshList, isOpen, close } : any) => {
+const [initialValues, setInitialValues] = useState(null)
 
   const handleSubmit = async (values: any) => {
     /*console.log('Form values:', values);
@@ -65,6 +64,27 @@ const ProductModal: React.FC = ({ menu, refreshList, isOpen, close } : any) => {
     }
     
   } 
+
+  useEffect(()=>{
+    if(product==null){
+      setInitialValues({
+        id:null,
+        name:'',
+        price:'',
+        description: '',
+        section: null
+      })
+    }else{
+      setInitialValues({
+        id: product.id,
+        name: product.name,
+        description: product.description,
+        price: product.price,
+        section: product.section
+      })
+    }
+  }, [product])
+
   const  handleOnClose = () => {
     close();
   }
@@ -74,12 +94,8 @@ const ProductModal: React.FC = ({ menu, refreshList, isOpen, close } : any) => {
         <ModalOverlay />
         <ModalContent>
         <Formik
-              initialValues={{ 
-                name: '',
-                price: '',
-                description: '',
-              }}
-              onSubmit={handleSubmit}
+            initialValues={initialValues}
+            onSubmit={handleSubmit}
             >
           <Form>
           <ModalHeader>Nuevo Producto1</ModalHeader>

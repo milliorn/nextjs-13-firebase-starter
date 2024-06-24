@@ -8,6 +8,7 @@ import firebase_app from '@/firebase/config';
 const Products = ({menu, onRefreshMenu}:any) => {
   const [isOpen, setIsOpen] = useState(false);
   const [products, setProducts] = useState([])
+  const [productForEdit, setProductForEdit] = useState();
   const changeIsOpenModal = () => {
     console.log('new product')
     setIsOpen(!isOpen);
@@ -45,8 +46,14 @@ const Products = ({menu, onRefreshMenu}:any) => {
     }
   }
 
-  const editProduct = () => {
-    console.log("edit product")
+  const editProduct = (product:any) => {
+    console.log("product", product)
+    setProductForEdit(product)
+    setIsOpen(true)
+  }
+  
+  const openModal=()=>{
+    setOpen
   }
 
   useEffect(() => {
@@ -77,7 +84,7 @@ const Products = ({menu, onRefreshMenu}:any) => {
           ))} 
         </List>
       </Flex>
-      <ProductModal isOpen={isOpen} close={changeIsOpenModal}  refreshList={handleRefreshProducts}  menu={menu}/>
+      <ProductModal product={productForEdit} isOpen={isOpen} close={changeIsOpenModal}  refreshList={handleRefreshProducts}  menu={menu}/>
     </>
   )
 }

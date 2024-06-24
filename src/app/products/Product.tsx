@@ -3,7 +3,7 @@ import { CloseIcon, EditIcon } from '@chakra-ui/icons';
 const Product = ({product, onEdit, onDelete}:any) => {
   
   const editHandle = () => {
-    onEdit(product.id)
+    onEdit(product)
   }
 
   const handleDelete = () => {
