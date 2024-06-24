@@ -31,14 +31,14 @@ export default function Menu() {
         const queryRestaurantName = replaceSpaces(restaurantName);
 
         console.log(queryRestaurantName);
-        const q = query(collection(db, "menu"), where("name", "==", queryRestaurantName));
+        const q = query(collection(db, "menus"), where("restaurantName", "==", queryRestaurantName));
         const querySnapshot = await getDocs(q);
 
         if (!querySnapshot.empty) {
           // Assuming there's only one restaurant with the given name
           const restaurantData = querySnapshot.docs[0].data();
           console.log("Restaurant data:", restaurantData);
-          setMenu(restaurantData.menus[0])
+          setMenu(restaurantData)
           setLoading(false);
         } else {
           console.log("Restaurant not found");
