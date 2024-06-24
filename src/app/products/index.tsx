@@ -2,6 +2,8 @@ import React,{useEffect, useState}  from 'react'
 import ProductModal from './productModal';
 import { CardBody, Flex, Spacer, Box, List, ListItem, Stack, Heading, Text, CardFooter, ButtonGroup, Button, IconButton } from '@chakra-ui/react'
 import Product from './Product';
+import { doc, getFirestore, updateDoc } from 'firebase/firestore';
+import firebase_app from '@/firebase/config';
 
 const Products = ({menu, onRefreshMenu}:any) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -15,8 +17,32 @@ const Products = ({menu, onRefreshMenu}:any) => {
     console.log("refresh")
     onRefreshMenu()
   }
-  const deleteProduct = () => {
-    console.log("delete product")
+  const deleteProduct = async (product : any) => {
+    const db = getFirestore(firebase_app);
+
+    try {
+        //const newSections = clonedSections.filter((item:any) => item.id !==  id);
+
+        const menuDocRef = doc(db, 'menus', menu.id);
+        const newSections = menu.sections;
+
+        // Find the index of the object to update
+        console.log("product", product)
+        const index = newSections.findIndex((item:any) => item.id === product.section);
+    
+        const products = menu.sections[index].products.filter((item:any)=> item.id !== product.id)
+          
+        newSections[index] = { ...newSections[index], products: products };
+        // Update the document with the modified array
+        await updateDoc(menuDocRef, {
+          sections: newSections
+        });   
+        console.log('Document updated successfully!');
+        onRefreshMenu()
+      console.log('Document updated successfully!');
+    } catch (error) {
+        console.error('Error updating document: ', error);
+    }
   }
 
   const editProduct = () => {

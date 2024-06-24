@@ -34,7 +34,7 @@ const SectionModal = ({close, isOpen, idSection, menu}:any) => {
 
   const createSection = async (db:any,values :any) => {
     console.log(menu)
-    const newValues = {...values, id: uuidv4(), products:[]}
+    const newValues = {...values, id: uuidv4(), produts:[]}
     const menuDocRed = doc(db, 'menus', menu.id);
     const newSection = menu.sections;
     newSection.push(newValues);

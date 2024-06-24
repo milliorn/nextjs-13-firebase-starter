@@ -8,7 +8,7 @@ const Product = ({product, onEdit, onDelete}:any) => {
 
   const handleDelete = () => {
     console.log("delete")
-    onDelete(product.id)
+    onDelete(product)
   }
 
   return(
