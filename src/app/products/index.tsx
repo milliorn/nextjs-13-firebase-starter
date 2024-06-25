@@ -75,14 +75,17 @@ const Products = ({menu, onRefreshMenu}:any) => {
         marginLeft={5} color="orange" variant="solid" >
         Nuevo Productos
       </Button>
-      <Flex>        
+      <Flex> 
+        {(products.leght > 0) ? 
         <List width={'100%'}>
           {products.map((product:any) => (
           <ListItem>
             <Product onEdit={editProduct} onDelete={deleteProduct} product={product}/> 
           </ListItem>
           ))} 
-        </List>
+        </List> :
+        <label> no hay productos</label>
+        }
       </Flex>
       <ProductModal product={productForEdit} isOpen={isOpen} close={changeIsOpenModal}  refreshList={handleRefreshProducts}  menu={menu}/>
     </>
