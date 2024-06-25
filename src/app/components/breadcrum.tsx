@@ -10,7 +10,7 @@ import {
 import { usePathname, useRouter } from 'next/navigation'
 
 const BreadcrumComponent = () => {
-  const [breadcrumItems, setBreadcrumItems] = useState([]);
+  const [breadcrumItems, setBreadcrumItems] = useState<any>([]);
   const router = useRouter();
   const currentUrl = usePathname();
 
@@ -54,7 +54,7 @@ const BreadcrumComponent = () => {
     <>
       <Flex gap='1' marginLeft={6}>
           <Breadcrumb spacing='8px' separator={<ChevronRightIcon color='gray.500' />}>
-          {breadcrumItems.map((item) => (
+          {breadcrumItems.map((item :any) => (
             <BreadcrumbItem key={item.name}>
               <BreadcrumbLink href={item.href}>{item.name}</BreadcrumbLink>
             </BreadcrumbItem>

@@ -14,7 +14,7 @@ const replaceSpaces = (string: string) => string.replace(/%20/g, ' ');
 export default function Menu() {
   const restaurantName : any = useParams().restaurantName;
   const refScreen : any = useRef(null);
-  const [menu, setMenu] = useState(null)
+  const [menu, setMenu] = useState<any>(null)
   const [showErrorNotFound, setShowErrorNotFound] = useState(false);
   const  [loading, setLoading] = useState(true);
 
@@ -36,7 +36,7 @@ export default function Menu() {
 
         if (!querySnapshot.empty) {
           // Assuming there's only one restaurant with the given name
-          const restaurantData = querySnapshot.docs[0].data();
+          const restaurantData :any = querySnapshot.docs[0].data();
           console.log("Restaurant data:", restaurantData);
           setMenu(restaurantData)
           setLoading(false);

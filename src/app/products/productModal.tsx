@@ -18,7 +18,7 @@ import { v4 as uuidv4 } from 'uuid';
 import { updateDoc, getFirestore,doc } from 'firebase/firestore';
 import firebase_app from '@/firebase/config';
 import { m } from 'framer-motion';
-const ProductModal: React.FC = ({ product, menu, refreshList, isOpen, close } : any) => {
+const ProductModal = ({ product, menu, refreshList, isOpen, close } : any) => {
 const [initialValues, setInitialValues] = useState(null)
   
   const handleSubmit = async (values: any) => {

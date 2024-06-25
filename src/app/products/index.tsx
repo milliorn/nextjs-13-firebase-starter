@@ -8,7 +8,7 @@ import firebase_app from '@/firebase/config';
 const Products = ({menu, onRefreshMenu}:any) => {
   const [isOpen, setIsOpen] = useState(false);
   const [products, setProducts] = useState([])
-  const [productForEdit, setProductForEdit] = useState(null);
+  const [productForEdit, setProductForEdit] = useState<any>(null);
   const changeIsOpenModal = () => {
     console.log('new product')
     setProductForEdit(null)
