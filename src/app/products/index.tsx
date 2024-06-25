@@ -11,6 +11,7 @@ const Products = ({menu, onRefreshMenu}:any) => {
   const [productForEdit, setProductForEdit] = useState();
   const changeIsOpenModal = () => {
     console.log('new product')
+    setProductForEdit(null)
     setIsOpen(!isOpen);
   }
   
@@ -53,7 +54,7 @@ const Products = ({menu, onRefreshMenu}:any) => {
   }
   
   const openModal=()=>{
-    setOpen
+    setIsOpen(true)
   }
 
   useEffect(() => {
@@ -87,7 +88,12 @@ const Products = ({menu, onRefreshMenu}:any) => {
         <label> no hay productos</label>
         }
       </Flex>
-      <ProductModal product={productForEdit} isOpen={isOpen} close={changeIsOpenModal}  refreshList={handleRefreshProducts}  menu={menu}/>
+      <ProductModal 
+        product={productForEdit} 
+        isOpen={isOpen} 
+        close={changeIsOpenModal}  
+        refreshList={handleRefreshProducts}  
+        menu={menu}/>
     </>
   )
 }

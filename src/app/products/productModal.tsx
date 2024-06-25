@@ -20,7 +20,7 @@ import firebase_app from '@/firebase/config';
 import { m } from 'framer-motion';
 const ProductModal: React.FC = ({ product, menu, refreshList, isOpen, close } : any) => {
 const [initialValues, setInitialValues] = useState(null)
-
+  
   const handleSubmit = async (values: any) => {
     /*console.log('Form values:', values);
     const db = getFirestore(firebase_app);
@@ -37,21 +37,31 @@ const [initialValues, setInitialValues] = useState(null)
       console.error('Error adding document: ', error);
     });*/
     const db = getFirestore(firebase_app);
- 
+    if (values.id!==null) {
+      updateRecord(db, values)
+    } else {
+      createRecord(db, values)
+    } 
+  } 
+  const updateRecord = async (db:any, values:any) => {
     try {
         const menuDocRef = doc(db, 'menus', menu.id);
         const newSections = menu.sections;
         console.log("newSections", newSections)
         // Find the index of the object to update
         console.log(values)
-        const index = newSections.findIndex((item:any) => item.id === values.section);
-        const newValues =  {...values, id: uuidv4()}
-    
-        // Update the object
+        const sectionIndex = newSections.findIndex((item:any) => item.id === values.section);
+        const productIndex = newSections[sectionIndex].products.findIndex((section:any)=> product.id === values.id)  
+
+        const newValues =  {...values};
+        
+        // Update the object
         //newSections[index] = { ...newSections[index], newValues };
-        const products = menu.sections[index].products
-        products.push(newValues)
-        newSections[index] = { ...newSections[index], products: products };
+        const products = menu.sections[sectionIndex].products
+        //products[productIndex] = newValues
+        const objectToReplace = products.find(product => product.id === values.id);
+        Object.assign(objectToReplace, newValues);
+        newSections[sectionIndex] = { ...newSections[sectionIndex], products: products };
         // Update the document with the modified array
         await updateDoc(menuDocRef, {
           sections: newSections
@@ -62,10 +72,40 @@ const [initialValues, setInitialValues] = useState(null)
     } catch (error) {
         console.error('Error updating document: ', error);
     }
+  }
+
+  const createRecord = async (db:any, values:any) => {
     
-  } 
+    try {
+        const menuDocRef = doc(db, 'menus', menu.id);
+        const newSections = menu.sections;
+        console.log("newSections", newSections)
+        // Find the index of the object to update
+        console.log(values)
+        const index = newSections.findIndex((item:any) => item.id === values.section);
+        
+        const newValues =  {...values, id: uuidv4()};
+        
+        // Update the object
+        //newSections[index] = { ...newSections[index], newValues };
+        const products = menu.sections[index].products
+        products.push(newValues)
+        newSections[index] = { ...newSections[index], products: products };
+        // Update the document with the modified array
+        await updateDoc(menuDocRef, {
+          sections: newSections
+        });   
+        console.log('Document updated successfully!');
+        //resetForm()
+        close()
+        refreshList();
+    } catch (error) {
+        console.error('Error updating document: ', error);
+    }
+  }
 
   useEffect(()=>{
+    console.log("prodducot modal", product)
     if(product==null){
       setInitialValues({
         id:null,
@@ -86,6 +126,7 @@ const [initialValues, setInitialValues] = useState(null)
   }, [product])
 
   const  handleOnClose = () => {
+    //resetForm();
     close();
   }
   return (
