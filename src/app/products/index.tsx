@@ -76,7 +76,7 @@ const Products = ({menu, onRefreshMenu}:any) => {
         Nuevo Productos
       </Button>
       <Flex> 
-        {(products.leght > 0) ? 
+        {(products.length > 0) ? 
         <List width={'100%'}>
           {products.map((product:any) => (
           <ListItem>

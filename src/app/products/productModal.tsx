@@ -41,13 +41,13 @@ const [initialValues, setInitialValues] = useState(null)
     try {
         const menuDocRef = doc(db, 'menus', menu.id);
         const newSections = menu.sections;
-
+        console.log("newSections", newSections)
         // Find the index of the object to update
         console.log(values)
         const index = newSections.findIndex((item:any) => item.id === values.section);
         const newValues =  {...values, id: uuidv4()}
     
-        // Update the object
+        // Update the object
         //newSections[index] = { ...newSections[index], newValues };
         const products = menu.sections[index].products
         products.push(newValues)
