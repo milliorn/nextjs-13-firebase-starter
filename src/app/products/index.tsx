@@ -8,7 +8,7 @@ import firebase_app from '@/firebase/config';
 const Products = ({menu, onRefreshMenu}:any) => {
   const [isOpen, setIsOpen] = useState(false);
   const [products, setProducts] = useState([])
-  const [productForEdit, setProductForEdit] = useState();
+  const [productForEdit, setProductForEdit] = useState(null);
   const changeIsOpenModal = () => {
     console.log('new product')
     setProductForEdit(null)
@@ -80,7 +80,7 @@ const Products = ({menu, onRefreshMenu}:any) => {
         {(products.length > 0) ? 
         <List width={'100%'}>
           {products.map((product:any) => (
-          <ListItem>
+          <ListItem key={product.id}>
             <Product onEdit={editProduct} onDelete={deleteProduct} product={product}/> 
           </ListItem>
           ))} 

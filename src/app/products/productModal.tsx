@@ -169,8 +169,8 @@ const [initialValues, setInitialValues] = useState(null)
                   <FormControl>
                     <Select {...field} placeholder="Seleccione una seccion">
                           {
-                            menu.sections.map((section) => (
-                              <option value={section.id}>{section.name}</option>
+                            menu.sections.map((section : any) => (
+                              <option key={section.id} value={section.id}>{section.name}</option>
                             ))
                           }
                     </Select>

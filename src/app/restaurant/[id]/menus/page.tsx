@@ -20,7 +20,7 @@ import { useParams, useRouter } from "next/navigation";
 
 export default function Page() {
   const id : any = useParams().id;
-  const refScreen = useRef(null);
+  const refScreen : any = useRef(null);
   const [isOpen, setIsOpen] = useState(false);
   const [menus, setMenus] = useState([]);
   const [restaurant, setRestaurant] = useState(null);

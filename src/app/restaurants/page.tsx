@@ -17,7 +17,7 @@ import { useAuthContext } from "../../context/AuthContext";
 import { validateLocaleAndSetLanguage } from "typescript";
 
 export default function Page() {
-  const refScreen = useRef(null);
+  const refScreen : any = useRef(null);
   const [isOpen, setIsOpen] = useState(false);
   const [restaurants, setRestaurants] = useState([]);
   const [restaurant, setRestaurant] = useState(null);
@@ -77,8 +77,9 @@ export default function Page() {
         </Button>
         <Card margin={5} height={'100%'}>
           <SimpleGrid columns={[1, 3, 4]} scrollBehavior={'auto'} maxHeight={['100%','100%','100%','100%']}   overflowY="scroll">
-            {restaurants.map((restaurantItem) => (
-              <RestaurantCard 
+            {restaurants.map((restaurantItem, index) => (
+              <RestaurantCard
+                key={index}
                 restaurant={restaurantItem}
                 openModalForEdit={openModalForEdit}
                 deleteRestaurant={deleteRestaurant}  

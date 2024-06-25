@@ -41,8 +41,9 @@ function Page(): JSX.Element {
       <InputGroup>
         <InputLeftElement
           pointerEvents="none"
-          children={<SearchIcon color="gray.300" />}
-        />
+        >
+          <SearchIcon color="gray.300" />
+        </InputLeftElement>
         <Input 
             onChange={( e ) => setEmail( e.target.value )}
             type="text" placeholder="Corre electronico" />
@@ -50,8 +51,9 @@ function Page(): JSX.Element {
       <InputGroup mt={4}>
         <InputLeftElement
           pointerEvents="none"
-          children={<SearchIcon color="gray.300" />}
-        />
+        >
+          <SearchIcon color="gray.300" />
+        </InputLeftElement>
         <Input 
             onChange={( e ) => setPassword( e.target.value )}
             type="password" placeholder="Contraseña" />

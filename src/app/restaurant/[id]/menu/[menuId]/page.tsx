@@ -19,7 +19,7 @@ import Products from "@/app/products";
 
 export default function Page() {
   const menuId : any = useParams().menuId;
-  const ref = useRef(null);
+  const ref : any= useRef(null);
   const [menu, setMenu] :any = useState(null);
   const [sections, setSections] : any = useState([]);
   const [products, setProducts] : any = useState([]);

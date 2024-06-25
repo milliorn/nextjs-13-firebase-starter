@@ -51,7 +51,7 @@ const Sections = ({menu, onGetMenu}:any) => {
       <Flex>        
         <List width={'100%'}>
           {menu.sections.map((section:any) => (
-          <ListItem>
+          <ListItem key={section.id}>
             <Section onEdit={edit} onDelete={deleteSection} section={section}/> 
           </ListItem>
           ))} 

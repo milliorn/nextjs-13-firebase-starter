@@ -13,7 +13,7 @@ import Section from "../components/section";
 const replaceSpaces = (string: string) => string.replace(/%20/g, ' ');
 export default function Menu() {
   const restaurantName : any = useParams().restaurantName;
-  const refScreen = useRef(null);
+  const refScreen : any = useRef(null);
   const [menu, setMenu] = useState(null)
   const [showErrorNotFound, setShowErrorNotFound] = useState(false);
   const  [loading, setLoading] = useState(true);
