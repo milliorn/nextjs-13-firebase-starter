@@ -23,7 +23,7 @@ export default function Page() {
   const refScreen : any = useRef(null);
   const [isOpen, setIsOpen] = useState(false);
   const [menus, setMenus] = useState([]);
-  const [restaurant, setRestaurant] = useState(null);
+  const [restaurant, setRestaurant] = useState<any>(null);
   const context = useAuthContext();
 
   const changeIsOpenModal = () => {
@@ -88,7 +88,7 @@ export default function Page() {
         <Card margin={5} height={'100%'}>
         {menus.length != 0 ?
           <SimpleGrid columns={[1, 3, 4]} scrollBehavior={'auto'} maxHeight={['100%','100%','100%','100%']}   overflowY="scroll">
-             {menus.map((menu) => (
+             {menus.map((menu:any) => (
               <MenuCard menu={menu} key={menu.id} deleteMenu={deleteMenu}/>
             ))} 
           </SimpleGrid>

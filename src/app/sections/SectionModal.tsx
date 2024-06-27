@@ -17,7 +17,7 @@ import { doc, getFirestore, updateDoc } from 'firebase/firestore';
 import firebase_app from '@/firebase/config';
 import { v4 as uuidv4 } from 'uuid';
 const SectionModal = ({close, isOpen, idSection, menu}:any) => {
-  const [initialValues, setInitialValues] = useState(null)
+  const [initialValues, setInitialValues] = useState<any>(null)
   
   const handleSubmit = async (values :any ) => {
     console.log('Form values:', values);
@@ -74,7 +74,7 @@ const SectionModal = ({close, isOpen, idSection, menu}:any) => {
                 description: ''
       })
     }else{
-      const section = menu.sections.find((item) => item.id === idSection)
+      const section = menu.sections.find((item:any) => item.id === idSection)
       setInitialValues({
         id: section.id,
         name: section.name,

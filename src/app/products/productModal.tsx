@@ -19,7 +19,7 @@ import { updateDoc, getFirestore,doc } from 'firebase/firestore';
 import firebase_app from '@/firebase/config';
 import { m } from 'framer-motion';
 const ProductModal = ({ product, menu, refreshList, isOpen, close } : any) => {
-const [initialValues, setInitialValues] = useState(null)
+const [initialValues, setInitialValues] = useState<any>(null)
   
   const handleSubmit = async (values: any) => {
     /*console.log('Form values:', values);
@@ -59,7 +59,7 @@ const [initialValues, setInitialValues] = useState(null)
         //newSections[index] = { ...newSections[index], newValues };
         const products = menu.sections[sectionIndex].products
         //products[productIndex] = newValues
-        const objectToReplace = products.find(product => product.id === values.id);
+        const objectToReplace = products.find((product:any) => product.id === values.id);
         Object.assign(objectToReplace, newValues);
         newSections[sectionIndex] = { ...newSections[sectionIndex], products: products };
         // Update the document with the modified array

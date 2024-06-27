@@ -19,9 +19,9 @@ import { doc, getFirestore, updateDoc } from 'firebase/firestore';
 import firebase_app from '@/firebase/config';
 import { collection, addDoc } from 'firebase/firestore';
 
-const RestaurantModal: React.FC = ({isOpen, close, restaurant}:any) => {
+const RestaurantModal = ({isOpen, close, restaurant}:any) => {
   const context = useAuthContext();
-  const [initialValues, setInitialValues] = useState(null)
+  const [initialValues, setInitialValues] = useState<any>(null)
 
 
   const handleSubmit = async (values :any ) => {

@@ -2,7 +2,7 @@ import React from 'react';
 import { CloseButton, Flex, Spacer, Box, Card, CardBody, Stack, Heading, Text, CardFooter, ButtonGroup, Button } from '@chakra-ui/react';
 import { useRouter } from "next/navigation";
 import { CloseIcon } from '@chakra-ui/icons';
-const RestaurantCard = ({restaurant, openModalForEdit, deleteRestaurant}) => {
+const RestaurantCard = ({restaurant, openModalForEdit, deleteRestaurant}:any) => {
   const router = useRouter();
 
   const handleEdit = () => {

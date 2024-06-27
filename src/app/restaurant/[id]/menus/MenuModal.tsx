@@ -20,7 +20,7 @@ import firebase_app from '@/firebase/config';
 import { collection, addDoc } from 'firebase/firestore';
 import { useRouter } from 'next/navigation';
 
-const MenuModal: React.FC = ({isOpen, close, restaurantId, restaurant}:any) => {
+const MenuModal = ({isOpen, close, restaurantId, restaurant}:any) => {
   const context = useAuthContext();
   const handleSubmit = async (values :any ) => {
     console.log('Form values:', values);

@@ -30,7 +30,7 @@ export default function Page() {
   
   const openModalForEdit = (id:any) => {
     console.log(restaurants)
-    const restaurantForEdit:any= restaurants.find((restaurant) => restaurant.id == id );
+    const restaurantForEdit:any= restaurants.find((restaurant :any) => restaurant.id == id );
     setRestaurant(restaurantForEdit)
     setIsOpen(!isOpen)
   }
