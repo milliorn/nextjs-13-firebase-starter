@@ -1,5 +1,5 @@
 db structure
-
+a
 restaurants
   id
   name
