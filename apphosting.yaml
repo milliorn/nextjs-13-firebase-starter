@@ -1,3 +1,10 @@
+# Settings for Cloud Run
+runConfig:
+  minInstances: 2
+  maxInstances: 10
+  concurrency: 5
+  cpu: 2
+  memoryMiB: 512
 env:
   - variable: NEXT_PUBLIC_FIREBASE_API_KEY
     secret: projects/808186607806/secrets/NEXT_PUBLIC_FIREBASE_API_KEY
