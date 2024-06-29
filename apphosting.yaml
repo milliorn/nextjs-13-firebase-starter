@@ -5,7 +5,7 @@ runConfig:
   concurrency: 5
   cpu: 2
   memoryMiB: 512
-  maxScale:5
+  maxScale: 5
 env:
   - variable: NEXT_PUBLIC_FIREBASE_API_KEY
     secret: projects/808186607806/secrets/NEXT_PUBLIC_FIREBASE_API_KEY
