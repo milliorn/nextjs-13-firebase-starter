@@ -111,9 +111,9 @@ export default function Page() {
                   <FormMenu menu={menu} menuId={menuId} />
                 </GridItem>
                 <GridItem colStart={3} rowSpan={1} colSpan={1} bg='papayawhip'>
-                  qr
+                    <Image src={menu.qrCode} alt='qrCode' />
                 </GridItem>
-                <GridItem colSpan={4} bg='tomato' >
+                <GridItem colSpan={4} bg='tomato'>
                   <CardBody>
                     <Heading as='h2' size='md'>Secciones</Heading>
                   </CardBody>

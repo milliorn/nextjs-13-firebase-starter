@@ -15,10 +15,33 @@ import {
 } from '@chakra-ui/react';
 import { getDatabase, ref, push, set } from 'firebase/database';
 import { useAuthContext } from '@/context/AuthContext';
-import { getFirestore } from 'firebase/firestore';
 import firebase_app from '@/firebase/config';
 import { collection, addDoc } from 'firebase/firestore';
 import { useRouter } from 'next/navigation';
+import QRCode from 'qrcode'
+import { doc, getFirestore, updateDoc } from 'firebase/firestore';
+const generateQRCode = async (url : string) => {
+  try {
+    const qrCode = await QRCode.toDataURL(url);
+    return qrCode
+  } catch (err) {
+    console.error(err);
+  }
+};
+
+const addQrCode = async (id: string) => {
+  const baseUrl = window.location.origin;
+  const qrCode = await generateQRCode(baseUrl+'/menu/'+id)
+  try {
+    const db = getFirestore(firebase_app);
+    const menuDocRed = doc(db, 'menus', id);
+    await updateDoc(menuDocRed, {qrCode: qrCode});   
+    console.log('Document updated successfully!');
+  } catch (error) {
+    console.error('Error updating document: ', error);
+  }
+}
+
 
 const MenuModal = ({isOpen, close, restaurantId, restaurant}:any) => {
   const context = useAuthContext();
@@ -33,11 +56,12 @@ const MenuModal = ({isOpen, close, restaurantId, restaurant}:any) => {
       restaurantId: restaurantId,
       sections:[],
       delete: false,
-      restaurantName: restaurant.name
+      restaurantName: restaurant.name,
     })
     .then((docRef) => {
       console.log('Document written with ID: ', docRef.id);
       close();
+      addQrCode(docRef.id);
     })
     .catch((error) => {
       console.error('Error adding document: ', error);
